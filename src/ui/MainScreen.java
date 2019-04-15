@@ -7,13 +7,13 @@ public class MainScreen extends JFrame{
     public MainScreen()
     {
         setSize(1000,700);
-        GridLayout main = new GridLayout(0, 2);
+        GridLayout main = new GridLayout(1, 2);
         this.setTitle("Competition");
-        JPanel arenaPic = new ArenaPanel("Sunny.jpg");
-        JPanel panel = new SidePanel();
+        JPanel arenaPanel = new ArenaPanel("Sunny.jpg");
+        JPanel sidePanel = new SidePanel();
         this.setLayout(main);
-        this.getContentPane().add(arenaPic, BorderLayout.WEST);
-        this.getContentPane().add(panel, BorderLayout.EAST);
+        this.getContentPane().add(arenaPanel);
+        this.getContentPane().add(sidePanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // this.pack();
     }
