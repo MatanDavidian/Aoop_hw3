@@ -4,6 +4,7 @@ import javax.swing.*;
 
 public class SidePanel extends JPanel {
 
+    private JPanel sidePanel;
     /**
      * build arena part
      */
@@ -17,7 +18,7 @@ public class SidePanel extends JPanel {
      */
     private JComboBox<String> chooseCompetition;
     private JTextField maxCompetitorsNumber;
-    private JComboBox<String> Discipline;
+    private JComboBox<String> discipline;
     private JComboBox<String> league;
     private JComboBox<String> gender;
     private JButton createCompetition;
@@ -39,5 +40,24 @@ public class SidePanel extends JPanel {
 
 
     public SidePanel() {
+        this.sidePanel = new JPanel();
+
+        this.arenaLenght = new JTextField();
+        this.snowSurface = new JComboBox<>();
+        this.weatherCondition = new JComboBox<>();
+        this.buildArena = new JButton("Build Arena");
+        this.chooseCompetition = new JComboBox<>();
+        this.maxCompetitorsNumber = new JTextField();
+        this.discipline = new JComboBox<>();
+        this.league = new JComboBox<>();
+        this.gender = new JComboBox<>();
+        this.createCompetition = new JButton("Create Competition");
+        this.name = new JTextField();
+        this.age = new JTextField();
+        this.maxSpeed = new JTextField();
+        this.acceleration = new JTextField();
+        this.addCompetitor = new JButton("Add Competitor");
+        this.startCompetition = new JButton("Start Competition");
+        this.showInfo = new JButton("Show Info");
     }
 }
