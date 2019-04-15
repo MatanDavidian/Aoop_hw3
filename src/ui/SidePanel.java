@@ -132,7 +132,10 @@ public class SidePanel extends JPanel {
         this.startAndInfoPanel.add(this.showInfo);
 
 
-        this.sidePanel.setVisible(true);
+        this.sidePanel.add(this.buildArenaPanel);
+        this.sidePanel.add(this.createCompetitionPanel);
+        this.sidePanel.add(this.addCompetitorPanel);
+        this.sidePanel.add(this.startAndInfoPanel);
 
 
 
