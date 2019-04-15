@@ -11,6 +11,8 @@ public class ArenaPanel extends JPanel {
 
     private BufferedImage image;
 
+
+
     public ArenaPanel(String arenaName) {
 
         try {
@@ -18,6 +20,11 @@ public class ArenaPanel extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image,0,0,this);
     }
 }
