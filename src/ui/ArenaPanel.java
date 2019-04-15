@@ -1,5 +1,7 @@
 package ui;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,18 +12,20 @@ import java.io.IOException;
 public class ArenaPanel extends JPanel {
 
     private BufferedImage image;
+    private int width;
+    private int height;
 
 
 
     public ArenaPanel(String arenaName) {
-        setImage(arenaName);
+        setImage(arenaName , 700);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(image != null) {
-            g.drawImage(image, 0, 0, this);
+            g.drawImage(image, 0, 0, width, height,this);
         }
     }
 
@@ -29,7 +33,12 @@ public class ArenaPanel extends JPanel {
         return image;
     }
 
-    public void setImage(String arenaName) {
+    public void setImage(String arenaName, int length) {
+        if (length <700 || length >900){
+            throw new ValueException("Invalid input values! Please try again");
+        }
+        height = length;
+        width = 875;
         try{
             if (arenaName == "None"){
                 image = null;
