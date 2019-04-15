@@ -14,17 +14,31 @@ public class ArenaPanel extends JPanel {
 
 
     public ArenaPanel(String arenaName) {
-        try {
-            image = ImageIO.read(new File(arenaName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        setImage(arenaName);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(image,0,0,this);
+        if(image != null) {
+            g.drawImage(image, 0, 0, this);
+        }
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(String arenaName) {
+        try{
+            if (arenaName == "None"){
+                image = null;
+            }
+            else {
+                image = ImageIO.read(new File(arenaName));
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 }
