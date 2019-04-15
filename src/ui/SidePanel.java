@@ -9,6 +9,7 @@ public class SidePanel extends JPanel {
     /**
      * build arena part
      */
+    private JPanel buildArenaPanel;
     private JTextField arenaLenght;
     private JComboBox<String> snowSurface;
     private JComboBox<String> weatherCondition;
@@ -17,6 +18,7 @@ public class SidePanel extends JPanel {
     /**
      * create competition part
      */
+    private JPanel createCompetitionPanel;
     private JComboBox<String> chooseCompetition;
     private JTextField maxCompetitorsNumber;
     private JComboBox<String> discipline;
@@ -27,6 +29,7 @@ public class SidePanel extends JPanel {
     /**
      * add competitor part
      */
+    private JPanel addCompetitorPanel;
     private JTextField name;
     private JTextField age;
     private JTextField maxSpeed;
@@ -36,12 +39,18 @@ public class SidePanel extends JPanel {
     /**
      * start and info
      */
+    private JPanel startAndInfoPanel;
     private JButton startCompetition;
     private JButton showInfo;
 
 
     public SidePanel() {
+        this.addCompetitorPanel = new JPanel();
+        this.buildArenaPanel = new JPanel();
+        this.createCompetitionPanel = new JPanel();
+        this.startAndInfoPanel = new JPanel();
         this.sidePanel = new JPanel();
+
         this.sidePanel.setBackground(Color.CYAN);
         this.arenaLenght = new JTextField();
         this.snowSurface = new JComboBox<>(new String[] {"Powder", "Crud" , "Ice"});
@@ -80,39 +89,46 @@ public class SidePanel extends JPanel {
         this.startCompetition.setPreferredSize(new Dimension(125,25));
         this.showInfo.setPreferredSize(new Dimension(125,25));
 
-        this.sidePanel.setLayout(new GridLayout(32 , 1));
+        this.sidePanel.setLayout(new GridLayout(4 , 1));
+        this.buildArenaPanel.setLayout(new GridLayout(8 , 1));
+        this.createCompetitionPanel.setLayout(new GridLayout(11 , 1));
+        this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
+        this.startAndInfoPanel.setLayout(new GridLayout(2 , 1));
 
-        this.sidePanel.add(new JLabel("Build Arena"));
-        this.sidePanel.add(new JLabel("Arena Length"));
-        this.sidePanel.add(this.arenaLenght);
-        this.sidePanel.add(new JLabel("Snow Surface"));
-        this.sidePanel.add(this.snowSurface);
-        this.sidePanel.add(new JLabel("Weather Condition"));
-        this.sidePanel.add(this.weatherCondition);
-        this.sidePanel.add(this.buildArena);
-        this.sidePanel.add(new JLabel("Choose Competition"));
-        this.sidePanel.add(this.chooseCompetition);
-        this.sidePanel.add(new JLabel("Max competitors number"));
-        this.sidePanel.add(this.maxCompetitorsNumber);
-        this.sidePanel.add(new JLabel("Discipline"));
-        this.sidePanel.add(this.discipline);
-        this.sidePanel.add(new JLabel("League"));
-        this.sidePanel.add(this.league);
-        this.sidePanel.add(new JLabel("Gender"));
-        this.sidePanel.add(this.gender);
-        this.sidePanel.add(this.createCompetition);
-        this.sidePanel.add(new JLabel("Add competitor"));
-        this.sidePanel.add(new JLabel("name"));
-        this.sidePanel.add(this.name);
-        this.sidePanel.add(new JLabel("Age"));
-        this.sidePanel.add(this.age);
-        this.sidePanel.add(new JLabel("Max speed"));
-        this.sidePanel.add(this.maxSpeed);
-        this.sidePanel.add(new JLabel("Acceleration"));
-        this.sidePanel.add(this.acceleration);
-        this.sidePanel.add(this.addCompetitor);
-        this.sidePanel.add(this.startCompetition);
-        this.sidePanel.add(this.showInfo);
+        this.buildArenaPanel.add(new JLabel("Build Arena"));
+        this.buildArenaPanel.add(new JLabel("Arena Length"));
+        this.buildArenaPanel.add(this.arenaLenght);
+        this.buildArenaPanel.add(new JLabel("Snow Surface"));
+        this.buildArenaPanel.add(this.snowSurface);
+        this.buildArenaPanel.add(new JLabel("Weather Condition"));
+        this.buildArenaPanel.add(this.weatherCondition);
+        this.buildArenaPanel.add(this.buildArena);
+
+        this.createCompetitionPanel.add(new JLabel("Choose Competition"));
+        this.createCompetitionPanel.add(this.chooseCompetition);
+        this.createCompetitionPanel.add(new JLabel("Max competitors number"));
+        this.createCompetitionPanel.add(this.maxCompetitorsNumber);
+        this.createCompetitionPanel.add(new JLabel("Discipline"));
+        this.createCompetitionPanel.add(this.discipline);
+        this.createCompetitionPanel.add(new JLabel("League"));
+        this.createCompetitionPanel.add(this.league);
+        this.createCompetitionPanel.add(new JLabel("Gender"));
+        this.createCompetitionPanel.add(this.gender);
+        this.createCompetitionPanel.add(this.createCompetition);
+
+        this.addCompetitorPanel.add(new JLabel("Add competitor"));
+        this.addCompetitorPanel.add(new JLabel("name"));
+        this.addCompetitorPanel.add(this.name);
+        this.addCompetitorPanel.add(new JLabel("Age"));
+        this.addCompetitorPanel.add(this.age);
+        this.addCompetitorPanel.add(new JLabel("Max speed"));
+        this.addCompetitorPanel.add(this.maxSpeed);
+        this.addCompetitorPanel.add(new JLabel("Acceleration"));
+        this.addCompetitorPanel.add(this.acceleration);
+        this.addCompetitorPanel.add(this.addCompetitor);
+
+        this.startAndInfoPanel.add(this.startCompetition);
+        this.startAndInfoPanel.add(this.showInfo);
 
 
 
