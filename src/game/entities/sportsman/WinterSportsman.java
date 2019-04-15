@@ -21,6 +21,7 @@ public class WinterSportsman extends Sportsman implements Competitor {
 
     /**
      * Ctor
+     *
      * @param name
      * @param age
      * @param gender
@@ -33,9 +34,10 @@ public class WinterSportsman extends Sportsman implements Competitor {
         ValidationUtils.assertNotNull(discipline);
         this.discipline = discipline;
     }
+
     @Override
     public void initRace() {
-        this.setLocation(new Point(0,this.getLocation().getY()));
+        this.setLocation(new Point(0, this.getLocation().getY()));
     }
 
     @Override
@@ -54,7 +56,7 @@ public class WinterSportsman extends Sportsman implements Competitor {
 
     @Override
     protected double getAcceleration() {
-        return super.getAcceleration()+ League.calcAccelerationBonus(this.getAge());
+        return super.getAcceleration() + League.calcAccelerationBonus(this.getAge());
     }
     //endregion
 }

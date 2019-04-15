@@ -18,13 +18,15 @@ public class WinterCompetition extends Competition {
     private final Discipline discipline;
     private final League league;
     private final Gender gender;
+
     /**
      * Ctor for the competition
-     * @param arena Winter arena in which the competition takes place in
+     *
+     * @param arena          Winter arena in which the competition takes place in
      * @param maxCompetitors max competitors in the competition
-     * @param discipline discipline
-     * @param league age league
-     * @param gender gender
+     * @param discipline     discipline
+     * @param league         age league
+     * @param gender         gender
      */
     public WinterCompetition(WinterArena arena, int maxCompetitors, Discipline discipline, League league, Gender gender) {
         super(arena, maxCompetitors);
@@ -34,8 +36,8 @@ public class WinterCompetition extends Competition {
     }
 
     @Override
-    protected boolean isValidCompetitor(Competitor competitor){
-        if(competitor instanceof WinterSportsman){
+    protected boolean isValidCompetitor(Competitor competitor) {
+        if (competitor instanceof WinterSportsman) {
             WinterSportsman winterSportsman = (WinterSportsman) competitor;
             return discipline.equals(winterSportsman.getDiscipline()) &&
                     league.isInLeague(winterSportsman.getAge()) &&

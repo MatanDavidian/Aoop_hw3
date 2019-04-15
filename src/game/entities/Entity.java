@@ -12,12 +12,13 @@ public abstract class Entity {
     /**
      * Default ctor places entity at (0,0)
      */
-    public Entity(){
+    public Entity() {
         this(new Point());
     }
 
     /**
      * Ctor
+     *
      * @param location current location
      */
     public Entity(Point location) {
@@ -25,12 +26,14 @@ public abstract class Entity {
     }
 
     //region Getters & setters
+
     /**
      * @return the current location of the entity
      */
     public Point getLocation() {
         return location;
     }
+
     /**
      * @param location the new location of the entity
      * @throws IllegalArgumentException if argument is null

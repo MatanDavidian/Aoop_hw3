@@ -21,7 +21,8 @@ public abstract class Competition {
 
     /**
      * Ctor for an abstract competition
-     * @param arena Arena in which the competition takes place in
+     *
+     * @param arena          Arena in which the competition takes place in
      * @param maxCompetitors Maximum number of competitor allowed in the competition
      */
     public Competition(IArena arena, int maxCompetitors) {
@@ -33,6 +34,7 @@ public abstract class Competition {
 
     /**
      * Validate if a competitor can compete
+     *
      * @param competitor contending competitor
      * @return true if competitor is validated else false
      */
@@ -40,31 +42,31 @@ public abstract class Competition {
 
     /**
      * adds a valid competitor to the competition
+     *
      * @param competitor competitor to be added
      */
-    public void addCompetitor(Competitor competitor){
+    public void addCompetitor(Competitor competitor) {
         ValidationUtils.assertNotNull(competitor);
-        if(maxCompetitors <= activeCompetitors.size()){
-            throw new IllegalStateException("WinterArena is full max = "+ maxCompetitors);
+        if (maxCompetitors <= activeCompetitors.size()) {
+            throw new IllegalStateException("WinterArena is full max = " + maxCompetitors);
         }
-        if(isValidCompetitor(competitor)){
+        if (isValidCompetitor(competitor)) {
             competitor.initRace();
             activeCompetitors.add(competitor);
-        }
-        else{
-            throw new IllegalArgumentException("Invalid competitor "+ competitor);
+        } else {
+            throw new IllegalArgumentException("Invalid competitor " + competitor);
         }
     }
 
     /**
      * Play a single turn of the game
      */
-    public void playTurn(){
+    public void playTurn() {
         ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
-        for(Competitor competitor: tmp){
-            if(!arena.isFinished(competitor)){
+        for (Competitor competitor : tmp) {
+            if (!arena.isFinished(competitor)) {
                 competitor.move(arena.getFriction());
-                if(arena.isFinished(competitor)){
+                if (arena.isFinished(competitor)) {
                     finishedCompetitors.add(competitor);
                     activeCompetitors.remove(competitor);
                 }
@@ -74,14 +76,16 @@ public abstract class Competition {
 
     /**
      * check if competition has active competitors
+     *
      * @return true if there are active competitors else false.
      */
-    public boolean hasActiveCompetitors(){
+    public boolean hasActiveCompetitors() {
         return activeCompetitors.size() > 0;
     }
 
     /**
      * Get competitors who have finished (used later so we could print them)
+     *
      * @return all finished competitors.
      */
     public ArrayList<Competitor> getFinishedCompetitors() {

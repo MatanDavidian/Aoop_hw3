@@ -12,11 +12,12 @@ import game.enums.League;
 public class SkiCompetition extends WinterCompetition {
     /**
      * Ctor for the competition
-     * @param arena Winter arena in which the competition takes place in
+     *
+     * @param arena          Winter arena in which the competition takes place in
      * @param maxCompetitors max competitors in the competition
-     * @param discipline discipline
-     * @param league age league
-     * @param gender gender
+     * @param discipline     discipline
+     * @param league         age league
+     * @param gender         gender
      */
     public SkiCompetition(WinterArena arena, int maxCompetitors, Discipline discipline, League league, Gender gender) {
         super(arena, maxCompetitors, discipline, league, gender);

@@ -10,11 +10,11 @@ public enum SnowSurface {
 
     public final double friction;
 
-    SnowSurface(double friction){
+    SnowSurface(double friction) {
         this.friction = friction;
     }
 
-    public double getFriction(){
+    public double getFriction() {
         return friction;
     }
 }
