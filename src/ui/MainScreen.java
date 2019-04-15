@@ -12,17 +12,14 @@ public class MainScreen extends JFrame{
         JPanel arenaPanel = new ArenaPanel("Sunny.jpg");
         JPanel sidePanel = new SidePanel();
         this.setLayout(main);
-        this.getContentPane().add(arenaPanel);
         this.getContentPane().add(sidePanel);
+        this.getContentPane().add(arenaPanel);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        // this.pack();
     }
     private ArenaPanel arenaPanel;
     private SidePanel sidePanel;
-
-
-
-
 
 
 }
