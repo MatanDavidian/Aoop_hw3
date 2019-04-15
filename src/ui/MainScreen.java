@@ -11,17 +11,10 @@ public class MainScreen extends JFrame{
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("Sunny.jpg");
         JPanel sidePanel = new SidePanel();
-        JPanel mainp = new JPanel();
-        mainp.setLayout(main);
-
-        mainp.add(arenaPanel);
-        mainp.add(sidePanel);
+        this.setLayout(main);
+        this.getContentPane().add(arenaPanel);
+        this.getContentPane().add(sidePanel);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        this.add(mainp);
-        this.pack();
-        this.setVisible(true);
-
        // this.pack();
     }
     private ArenaPanel arenaPanel;
