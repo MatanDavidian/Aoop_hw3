@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class SidePanel extends JPanel {
 
-    private JPanel sidePanel;
+
     /**
      * build arena part
      */
@@ -49,9 +49,9 @@ public class SidePanel extends JPanel {
         this.buildArenaPanel = new JPanel();
         this.createCompetitionPanel = new JPanel();
         this.startAndInfoPanel = new JPanel();
-        this.sidePanel = new JPanel();
 
-        this.sidePanel.setBackground(Color.CYAN);
+        this.setBackground(Color.CYAN);
+
         this.arenaLenght = new JTextField();
         this.snowSurface = new JComboBox<>(new String[] {"Powder", "Crud" , "Ice"});
         this.weatherCondition = new JComboBox<>(new String[] {"Sunny" , "Stormy" , "Cloudy"});
@@ -89,7 +89,7 @@ public class SidePanel extends JPanel {
         this.startCompetition.setPreferredSize(new Dimension(125,25));
         this.showInfo.setPreferredSize(new Dimension(125,25));
 
-        this.sidePanel.setLayout(new GridLayout(4 , 1));
+        this.setLayout(new GridLayout(4 , 1));
         this.buildArenaPanel.setLayout(new GridLayout(8 , 1));
         this.createCompetitionPanel.setLayout(new GridLayout(11 , 1));
         this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
@@ -129,8 +129,12 @@ public class SidePanel extends JPanel {
 
         this.startAndInfoPanel.add(this.startCompetition);
         this.startAndInfoPanel.add(this.showInfo);
-        this.sidePanel.setVisible(true);
+        this.setVisible(true);
 
+        this.add(this.buildArenaPanel);
+        this.add(this.createCompetitionPanel);
+        this.add(this.addCompetitorPanel);
+        this.add(this.startAndInfoPanel);
 
 
 
