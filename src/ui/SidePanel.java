@@ -1,5 +1,7 @@
 package ui;
 
+import java.awt.GridLayout;
+
 import javax.swing.*;
 
 public class SidePanel extends JPanel {
@@ -37,7 +39,4 @@ public class SidePanel extends JPanel {
     private JButton startCompetition;
     private JButton showInfo;
 
-
-    public SidePanel() {
-    }
 }
