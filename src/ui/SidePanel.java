@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class SidePanel extends JPanel {
 
@@ -41,9 +42,10 @@ public class SidePanel extends JPanel {
 
     public SidePanel() {
         this.sidePanel = new JPanel();
+        this.sidePanel.setBackground(Color.CYAN);
 
         this.arenaLenght = new JTextField();
-        this.snowSurface = new JComboBox<>();
+        this.snowSurface = new JComboBox<>(new String[] {});
         this.weatherCondition = new JComboBox<>();
         this.buildArena = new JButton("Build Arena");
         this.chooseCompetition = new JComboBox<>();
