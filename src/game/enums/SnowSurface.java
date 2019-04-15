@@ -8,6 +8,7 @@ public enum SnowSurface {
     CRUD(0.5),
     ICE(0.3);
 
+
     public final double friction;
 
     SnowSurface(double friction) {
