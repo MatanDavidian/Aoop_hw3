@@ -6,9 +6,10 @@ import game.enums.Gender;
 /**
  * Created by itzhak on 25-Mar-19.
  */
-public class Skier extends WinterSportsman{
+public class Skier extends WinterSportsman {
     /**
      * Ctor
+     *
      * @param name
      * @param age
      * @param gender

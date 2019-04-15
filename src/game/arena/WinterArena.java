@@ -21,8 +21,9 @@ public class WinterArena implements IArena {
 
     /**
      * Ctor for a generic arena
-     * @param length the length of the arena
-     * @param surface the snow surface of the arena
+     *
+     * @param length    the length of the arena
+     * @param surface   the snow surface of the arena
      * @param condition the weather condition in the arena
      */
     public WinterArena(double length, SnowSurface surface, WeatherCondition condition) {
@@ -32,7 +33,7 @@ public class WinterArena implements IArena {
     }
 
     @Override
-    public double getFriction(){
+    public double getFriction() {
         return surface.getFriction();
     }
 

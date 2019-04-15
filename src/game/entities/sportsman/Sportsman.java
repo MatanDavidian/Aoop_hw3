@@ -19,6 +19,7 @@ public class Sportsman extends MobileEntity {
 
     /**
      * Ctor
+     *
      * @param name
      * @param age
      * @param gender
@@ -26,7 +27,7 @@ public class Sportsman extends MobileEntity {
      * @param maxSpeed
      */
     public Sportsman(String name, double age, Gender gender, double acceleration, double maxSpeed) {
-        super(0, acceleration,maxSpeed);
+        super(0, acceleration, maxSpeed);
         ValidationUtils.assertNotNullOrEmptyString(name);
         ValidationUtils.assertPositive(age);
         ValidationUtils.assertNotNull(gender);
