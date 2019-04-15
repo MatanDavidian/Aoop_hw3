@@ -14,12 +14,12 @@ public class ArenaPanel extends JPanel {
 
 
     public ArenaPanel(String arenaName) {
-
         try {
             image = ImageIO.read(new File(arenaName));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override

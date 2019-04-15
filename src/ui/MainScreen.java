@@ -1,19 +1,21 @@
 package ui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 public class MainScreen extends JFrame{
     public MainScreen()
     {
+        setSize(1000,700);
+        GridLayout main = new GridLayout(0, 2);
         this.setTitle("Competition");
-        JPanel p1 = new ArenaPanel("Sunny.jpg");
-        JPanel p2 = new SidePanel();
-        this.setLayout(new BorderLayout());
-        this.getContentPane().add(p1, BorderLayout.WEST);
-        this.getContentPane().add(p2, BorderLayout.EAST);
+        JPanel arenaPic = new ArenaPanel("Sunny.jpg");
+        JPanel panel = new SidePanel();
+        this.setLayout(main);
+        this.getContentPane().add(arenaPic, BorderLayout.WEST);
+        this.getContentPane().add(panel, BorderLayout.EAST);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.pack();
+       // this.pack();
     }
     private ArenaPanel arenaPanel;
     private SidePanel sidePanel;
