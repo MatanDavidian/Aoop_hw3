@@ -5,7 +5,7 @@ import utilities.Point;
 /**
  * Created by itzhak on 07-Mar-19.
  */
-public class MobileEntity extends Entity implements IMobileEntity{
+public class MobileEntity extends Entity implements IMobileEntity, Runnable{
     private final double maxSpeed;
     private final double acceleration;
     private double speed;
@@ -22,6 +22,10 @@ public class MobileEntity extends Entity implements IMobileEntity{
         this.maxSpeed = maxSpeed;
     }
 
+    @Override
+    public void run() {
+
+    }
     //region IMobileEntity Implementation
 
     /**
