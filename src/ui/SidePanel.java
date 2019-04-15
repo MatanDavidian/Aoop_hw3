@@ -51,7 +51,6 @@ public class SidePanel extends JPanel {
         this.startAndInfoPanel = new JPanel();
 
         this.setBackground(Color.CYAN);
-
         this.arenaLenght = new JTextField();
         this.snowSurface = new JComboBox<>(new String[] {"Powder", "Crud" , "Ice"});
         this.weatherCondition = new JComboBox<>(new String[] {"Sunny" , "Stormy" , "Cloudy"});
