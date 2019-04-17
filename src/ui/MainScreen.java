@@ -22,8 +22,10 @@ public class MainScreen extends JFrame{
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
+
         this.add(arenaPanel, BorderLayout.CENTER);
         this.add(sidePanel, BorderLayout.EAST);
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /**

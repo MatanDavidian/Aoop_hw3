@@ -88,57 +88,72 @@ public class SidePanel extends JPanel {
         this.startCompetition.setPreferredSize(new Dimension(125,25));
         this.showInfo.setPreferredSize(new Dimension(125,25));
 
-        this.setLayout(new GridLayout(4 , 1));
+        this.setLayout(new GridLayout(0 , 1));
         this.buildArenaPanel.setLayout(new GridLayout(8 , 1));
         this.createCompetitionPanel.setLayout(new GridLayout(11 , 1));
         this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
         this.startAndInfoPanel.setLayout(new GridLayout(2 , 1));
 
-        this.buildArenaPanel.add(new JLabel("Build Arena"));
-        this.buildArenaPanel.add(new JLabel("Arena Length"));
-        this.buildArenaPanel.add(this.arenaLenght);
-        this.buildArenaPanel.add(new JLabel("Snow Surface"));
-        this.buildArenaPanel.add(this.snowSurface);
-        this.buildArenaPanel.add(new JLabel("Weather Condition"));
-        this.buildArenaPanel.add(this.weatherCondition);
-        this.buildArenaPanel.add(this.buildArena);
+        JSeparator js = new JSeparator();
+        js.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
 
-        this.createCompetitionPanel.add(new JLabel("Choose Competition"));
-        this.createCompetitionPanel.add(this.chooseCompetition);
-        this.createCompetitionPanel.add(new JLabel("Max competitors number"));
-        this.createCompetitionPanel.add(this.maxCompetitorsNumber);
-        this.createCompetitionPanel.add(new JLabel("Discipline"));
-        this.createCompetitionPanel.add(this.discipline);
-        this.createCompetitionPanel.add(new JLabel("League"));
-        this.createCompetitionPanel.add(this.league);
-        this.createCompetitionPanel.add(new JLabel("Gender"));
-        this.createCompetitionPanel.add(this.gender);
-        this.createCompetitionPanel.add(this.createCompetition);
 
-        this.addCompetitorPanel.add(new JLabel("Add competitor"));
-        this.addCompetitorPanel.add(new JLabel("name"));
-        this.addCompetitorPanel.add(this.name);
-        this.addCompetitorPanel.add(new JLabel("Age"));
-        this.addCompetitorPanel.add(this.age);
-        this.addCompetitorPanel.add(new JLabel("Max speed"));
-        this.addCompetitorPanel.add(this.maxSpeed);
-        this.addCompetitorPanel.add(new JLabel("Acceleration"));
-        this.addCompetitorPanel.add(this.acceleration);
-        this.addCompetitorPanel.add(this.addCompetitor);
+        this.add(new JLabel("<HTML><U><font color=blue><b>Build Arena</b></font></U></HTML>"));
+        this.add(new JLabel("Arena Length"));
+        this.add(this.arenaLenght);
+        this.add(new JLabel("Snow Surface"));
+        this.add(this.snowSurface);
+        this.add(new JLabel("Weather Condition"));
+        this.add(this.weatherCondition);
+        this.add(new JLabel(""));
+        this.add(this.buildArena);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
 
-        this.startAndInfoPanel.add(this.startCompetition);
-        this.startAndInfoPanel.add(this.showInfo);
+
+
+        this.add(new JLabel("<HTML><U><font color=blue><b>Choose Competition</b></font></U></HTML>"));
+        this.add(this.chooseCompetition);
+        this.add(new JLabel("Max competitors number"));
+        this.add(this.maxCompetitorsNumber);
+        this.add(new JLabel("Discipline"));
+        this.add(this.discipline);
+        this.add(new JLabel("League"));
+        this.add(this.league);
+        this.add(new JLabel("Gender"));
+        this.add(this.gender);
+        this.add(new JLabel(""));
+        this.add(this.createCompetition);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
+
+
+        this.add(new JLabel("<HTML><U><font color=blue><b>Add competitor</b></font></U></HTML>"));
+        this.add(new JLabel("name"));
+        this.add(this.name);
+        this.add(new JLabel("Age"));
+        this.add(this.age);
+        this.add(new JLabel("Max speed"));
+        this.add(this.maxSpeed);
+        this.add(new JLabel("Acceleration"));
+        this.add(this.acceleration);
+        this.add(new JLabel(""));
+        this.add(this.addCompetitor);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
+
+
+        this.add(this.startCompetition);
+        this.add(this.showInfo);
+
         this.setVisible(true);
-
-        this.add(this.buildArenaPanel);
-        this.add(this.createCompetitionPanel);
-        this.add(this.addCompetitorPanel);
-        this.add(this.startAndInfoPanel);
 
 
 
 
     }
+
+
 
     public JPanel getBuildArenaPanel() {
         return buildArenaPanel;
