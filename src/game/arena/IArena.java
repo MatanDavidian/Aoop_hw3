@@ -20,4 +20,6 @@ public interface IArena {
      * @return true if finished else false
      */
     boolean isFinished(IMobileEntity mobileEntity);
+
+
 }

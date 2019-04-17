@@ -9,6 +9,8 @@ import java.util.ArrayList;
  * Created by itzhak on 24-Mar-19.
  */
 public abstract class Competition {
+
+
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
@@ -91,4 +93,21 @@ public abstract class Competition {
     public ArrayList<Competitor> getFinishedCompetitors() {
         return new ArrayList<>(finishedCompetitors);
     }
+
+    public IArena getArena() {
+        return arena;
+    }
+
+    public void setArena(IArena arena) {
+        this.arena = arena;
+    }
+
+    public ArrayList<Competitor> getActiveCompetitors() {
+        return activeCompetitors;
+    }
+
+    public int getMaxCompetitors() {
+        return maxCompetitors;
+    }
+
 }
