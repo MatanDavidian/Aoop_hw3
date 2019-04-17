@@ -1,14 +1,15 @@
 package ui;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import sun.awt.SunHints;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.BrokenBarrierException;
 
 public class MainScreen extends JFrame{
-    public MainScreen()
-    {
+    public MainScreen() throws Exception {
         setSize(1000,700);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
@@ -21,16 +22,23 @@ public class MainScreen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("action!");
-                String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString()+".jpg";
+                String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
                 String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
                 int arenaLength = Integer.parseInt(arenaLengthString);
                 System.out.println(arenaLength);
-                ((ArenaPanel) arenaPanel).setImage( arenaName ,  arenaLength );
+                try {
+                    ((ArenaPanel) arenaPanel).setImage(arenaName , arenaLength);
+                }
+                catch (ValueException ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+
+                }
                 repaint();
             }
         });
-       // this.pack();
+
     }
+       // this.pack();
     private ArenaPanel arenaPanel;
     private SidePanel sidePanel;
 

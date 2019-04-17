@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyException;
 
 public class ArenaPanel extends JPanel {
 
@@ -18,7 +19,12 @@ public class ArenaPanel extends JPanel {
 
 
     public ArenaPanel(String arenaName) {
-        setImage(arenaName , 700);
+        try {
+            setImage(arenaName, 700);
+        }
+        catch (ValueException e){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -33,7 +39,9 @@ public class ArenaPanel extends JPanel {
         return image;
     }
 
-    public void setImage(String arenaName, int length) {
+
+
+    public void setImage (String arenaName, int length) throws ValueException{
         if (length <700 || length >900){
             throw new ValueException("Invalid input values! Please try again");
         }
@@ -45,8 +53,9 @@ public class ArenaPanel extends JPanel {
             }
             else {
                 image = ImageIO.read(new File(arenaName));
+            }
         }
-    } catch (IOException e) {
+        catch (IOException e) {
         e.printStackTrace();
     }
     }
