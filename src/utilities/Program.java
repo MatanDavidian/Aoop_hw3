@@ -1,19 +1,24 @@
-/**
+
 package utilities;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import ui.MainScreen;
 
 public class Program {
 
     public static void main(String[] args) {
-        MainScreen frame = new MainScreen();
-        frame.setVisible(true);
+        try {
+            MainScreen frame = new MainScreen();
+            frame.setVisible(true);
+        }
+        catch (ValueException e){
+            System.out.println("main error");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
-**/
 /**
- *
- */
 package utilities;
 
 import game.GameEngine;
@@ -28,10 +33,6 @@ import game.enums.*;
 
 import java.lang.reflect.Constructor;
 
-/**
- * @author Itzhak Eretz Kdosha
- * Main class(run demo)
- */
 public class Program {
 
     public static void main(String[] args) {
@@ -75,3 +76,5 @@ public class Program {
     }
 
 }
+
+**/
