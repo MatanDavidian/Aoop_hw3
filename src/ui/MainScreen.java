@@ -16,19 +16,21 @@ public class MainScreen extends JFrame{
         this.add(arenaPanel, BorderLayout.CENTER);
         this.add(sidePanel, BorderLayout.EAST);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        ((SidePanel) sidePanel).buildArena.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("action!");
-                String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString()+".jpg";
-                String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
-                int arenaLength = Integer.parseInt(arenaLengthString);
-                System.out.println(arenaLength);
-                ((ArenaPanel) arenaPanel).setImage( arenaName ,  arenaLength );
-                repaint();
-            }
-        });
+        try {
+            ((SidePanel) sidePanel).buildArena.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("action!");
+                    String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
+                    String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
+                    int arenaLength = Integer.parseInt(arenaLengthString);
+                    System.out.println(arenaLength);
+                    ((ArenaPanel) arenaPanel).setImage(arenaName, arenaLength);
+                    repaint();
+                }
+            });
+        }
+        catch (Exception err){}
        // this.pack();
     }
     private ArenaPanel arenaPanel;
