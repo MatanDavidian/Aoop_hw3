@@ -43,4 +43,21 @@ public class WinterArena implements IArena {
         return mobileEntity.getLocation().getX() >= length;
     }
 
+    public double getLength() {
+        return length;
+    }
+
+    public SnowSurface getSurface() {
+        return surface;
+    }
+
+    public WeatherCondition getCondition() {
+        return condition;
+    }
+
+    @Override
+    public String toString() {
+        String s= "length: " + length +"\nsurface: " + surface + "\ncondition: " + condition;
+        return s;
+    }
 }

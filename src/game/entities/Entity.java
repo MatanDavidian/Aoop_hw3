@@ -2,11 +2,11 @@ package game.entities;
 
 import utilities.Point;
 import utilities.ValidationUtils;
-
+import java.util.Observable;
 /**
  * Created by itzhak on 24-Mar-19.
  */
-public abstract class Entity {
+public abstract class Entity extends Observable implements Runnable {
     private Point location;
 
     /**
