@@ -70,4 +70,12 @@ public class MobileEntity extends Entity implements IMobileEntity{
             throw new ValueException("friction value is -1 , try to upddate friction");
         }
     }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
 }

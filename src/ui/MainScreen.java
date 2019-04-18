@@ -2,6 +2,7 @@ package ui;
 import game.GameEngine;
 import game.arena.WinterArena;
 import game.competition.*;
+import game.entities.MobileEntity;
 import game.entities.sportsman.Skier;
 import game.entities.sportsman.Snowboarder;
 import game.entities.sportsman.Sportsman;
@@ -10,10 +11,15 @@ import game.enums.*;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import sun.awt.SunHints;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 
 public class MainScreen extends JFrame{
@@ -78,9 +84,9 @@ public class MainScreen extends JFrame{
             }
         });
         /**
-         * **************************************
+         * **********************************************
          * Create Competition Button -  action listener *
-         * **************************************
+         * **********************************************
          */
         ((SidePanel) sidePanel).createCompetition.addActionListener(new ActionListener() {
             @Override
@@ -98,6 +104,7 @@ public class MainScreen extends JFrame{
                     System.out.println("Error! enter a number at max competitors number.");
                     maxCompetitorsNumber = 0;
                 }
+
                 String stringDiscipline = ((SidePanel) sidePanel).getDiscipline().getSelectedItem().toString();
                 Discipline discipline;
                 if(stringDiscipline=="Slalom")
@@ -184,15 +191,25 @@ public class MainScreen extends JFrame{
                 else
                     competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
                 competition.addCompetitor(competitor);
+
+                try {
+                    //set image according to name and length.
+                    ((ArenaPanel) arenaPanel).addPlayer();
+
+                }
+                catch (ValueException ex){
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }
                 //print details of the arena.
                 System.out.println(competitor);
-
+                revalidate();
+                repaint();
             }
         });
         /**
-         * **************************************
-         * Start Comtetition Button -  action listener *
-         * **************************************
+         * *********************************************
+         * Start Competition Button -  action listener *
+         * *********************************************
          */
         ((SidePanel) sidePanel).getStartCompetition().addActionListener(new ActionListener() {
             @Override
@@ -200,12 +217,75 @@ public class MainScreen extends JFrame{
                 /**
                  * start comtetition.
                  */
-                GameEngine.getInstance().startRace(competition);
+                GameEngine.getInstance().setCompetition(competition);
+                new Thread(GameEngine.getInstance()).start();
+
+
+
             }
         });
+
+        /**
+         * *************************************
+         * Show info Button -  action listener *
+         * *************************************
+         */
+        ((SidePanel) sidePanel).getShowInfo().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(competition.getActiveCompetitors().size() + competition.getFinishedCompetitors().size() > 0){
+                    Vector<String> columnNames = new Vector<>();
+                    columnNames.add("Name");
+                    columnNames.add("Speed");
+                    columnNames.add("Max Speed");
+                    columnNames.add("Location");
+                    columnNames.add("Finished");
+                    Vector<Object> data = new Vector<>();
+                    for (Competitor competitor : competition.getFinishedCompetitors()){
+                        try {
+                            Vector<String> dataOfCompetitor =new Vector<>();
+                            dataOfCompetitor.add(((Sportsman)competitor).getName() );
+                            dataOfCompetitor.add(((Sportsman)competitor).getSpeed()+"");
+                            dataOfCompetitor.add(((Sportsman)competitor).getMaxSpeed()+"");
+                            dataOfCompetitor.add(((Sportsman)competitor).getLocation()+"");
+                            dataOfCompetitor.add("YES");
+                            data.add(dataOfCompetitor);
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                    }
+
+                    for (Competitor competitor : competition.getActiveCompetitors()){
+                        try {
+                            Vector<String> dataOfCompetitor =new Vector<>();
+                            dataOfCompetitor.add(((Sportsman)competitor).getName() );
+                            dataOfCompetitor.add(((Sportsman)competitor).getSpeed()+"");
+                            dataOfCompetitor.add(((Sportsman)competitor).getMaxSpeed()+"");
+                            dataOfCompetitor.add(((Sportsman)competitor).getLocation()+"");
+                            dataOfCompetitor.add("NO");                            data.add(dataOfCompetitor);
+                        }
+                        catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+
+                    }
+                    JFrame frame = new JFrame();
+                    JTable infoTable = new JTable(data,columnNames);
+                    JScrollPane scrollPane = new JScrollPane(infoTable);
+                    scrollPane.setViewportView(infoTable);
+                    scrollPane.setVisible(true);
+                    frame.add(scrollPane);
+                    frame.pack();
+                    frame.setVisible(true);
+
+
+                }
+
+
+            }
+        });
+
     }
-    private ArenaPanel arenaPanel;
-    private SidePanel sidePanel;
-
-
 }

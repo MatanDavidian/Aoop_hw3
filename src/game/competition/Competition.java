@@ -102,4 +102,20 @@ public abstract class Competition extends Thread implements Observer {
     {
 
     }
+
+    public IArena getArena() {
+        return arena;
+    }
+
+    public void setArena(IArena arena) {
+        this.arena = arena;
+    }
+
+    public ArrayList<Competitor> getActiveCompetitors() {
+        return activeCompetitors;
+    }
+
+    public int getMaxCompetitors() {
+        return maxCompetitors;
+    }
 }
