@@ -5,7 +5,7 @@ import game.competition.Competition;
 import game.competition.Competitor;
 import utilities.ValidationUtils;
 
-public class GameEngine {
+public class GameEngine implements Runnable{
 
     private static GameEngine instance;
 
@@ -55,4 +55,8 @@ public class GameEngine {
         }
     }
 
+    @Override
+    public void run() {
+        startRace();
+    }
 }
