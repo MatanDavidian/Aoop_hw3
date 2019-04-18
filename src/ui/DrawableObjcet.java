@@ -1,5 +1,7 @@
 package ui;
 
+import game.competition.Competitor;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,35 +12,32 @@ import java.io.IOException;
 public class DrawableObjcet{
 
     private BufferedImage image;
-    private Point location;
+    //private Point location;
+    private Competitor competitor;
     private JPanel myArena;
     private final int size = 30;
 
-    public DrawableObjcet(String imgName , Point location , ArenaPanel myArena){
+    public DrawableObjcet(String imgName , Competitor competitor , ArenaPanel myArena){
         try {
             this.image = ImageIO.read(new File(imgName+".png"));
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        this.location = location;
+        this.competitor = competitor;
         this.myArena = myArena;
     }
 
     public void draw(Graphics g){
-        g.drawImage(image , (int)location.getX() , (int)location.getY() , size ,size , myArena);
+        g.drawImage(image , (int)competitor.getLocation().getY(),(int)competitor.getLocation().getX() , size ,size , myArena);
     }
 
-    public void setLocation(int x , int y) {
-        this.location = new Point(x,y);
+    public Competitor getCompetitor() {
+        return competitor;
     }
 
-    public void setXLocation(int x) {
-        this.location = new Point(x,(int)this.location.getY());
-    }
-
-    public void setYLocation(int y) {
-        this.location = new Point( (int) this.location.getX(),y);
+    public void setCompetitor(Competitor competitor) {
+        this.competitor = competitor;
     }
 
     public int getSize() {
