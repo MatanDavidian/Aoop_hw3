@@ -5,6 +5,8 @@ import game.competition.Competition;
 import game.competition.Competitor;
 import utilities.ValidationUtils;
 
+import static java.lang.Thread.sleep;
+
 public class GameEngine implements Runnable {
 
     private static GameEngine instance;
@@ -39,6 +41,10 @@ public class GameEngine implements Runnable {
         int step;
         for (step = 0; competition.hasActiveCompetitors(); step++) {
             competition.playTurn();
+            try{
+                sleep(30);
+            }
+            catch (Exception e) {}
         }
         System.out.println("race finished in " + step + " steps");
         printResults(competition);

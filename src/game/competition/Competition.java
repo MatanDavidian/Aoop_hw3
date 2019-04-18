@@ -9,7 +9,7 @@ import java.util.Observer;
 /**
  * Created by itzhak on 24-Mar-19.
  */
-public abstract class Competition extends Thread implements Observer {
+public abstract class Competition extends Thread implements Observer, Runnable {
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
@@ -67,12 +67,8 @@ public abstract class Competition extends Thread implements Observer {
         for (Competitor competitor : tmp) {
             if (!arena.isFinished(competitor)) {
                 ((MobileEntity)competitor).setFriction(arena.getFriction());
-                new Thread((MobileEntity)competitor).start();
-                try {
-                    sleep(100);
-                }
-                catch (Exception e){}
-                //competitor.move(arena.getFriction());
+                //new Thread((MobileEntity)competitor).start();
+                competitor.move(arena.getFriction());
                 if (arena.isFinished(competitor)) {
                     finishedCompetitors.add(competitor);
                     activeCompetitors.remove(competitor);
@@ -117,5 +113,9 @@ public abstract class Competition extends Thread implements Observer {
 
     public int getMaxCompetitors() {
         return maxCompetitors;
+    }
+    public void run()
+    {
+        playTurn();
     }
 }

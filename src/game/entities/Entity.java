@@ -30,7 +30,7 @@ public abstract class Entity extends Observable implements Runnable {
     /**
      * @return the current location of the entity
      */
-    public Point getLocation() {
+    public synchronized Point getLocation() {
         return location;
     }
 
@@ -38,7 +38,7 @@ public abstract class Entity extends Observable implements Runnable {
      * @param location the new location of the entity
      * @throws IllegalArgumentException if argument is null
      */
-    public void setLocation(Point location) {
+    public synchronized void setLocation(Point location) {
         ValidationUtils.assertNotNull(location);
         this.location = location;
     }

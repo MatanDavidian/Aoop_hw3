@@ -21,7 +21,7 @@ import java.util.concurrent.BrokenBarrierException;
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
-    private ArenaPanel arenaPanel;
+    private ArenaPanel arenaPanel= new ArenaPanel("None");
     private SidePanel sidePanel;
     private String compType;
     private String gender;
@@ -142,6 +142,7 @@ public class MainScreen extends JFrame{
                      competition = new SkiCompetition(arena,maxCompetitorsNumber,discipline,league,gender);
                 else if (competitionType.equals("SnowboardCompetition"))
                     competition = new SnowboardCompetition(arena,maxCompetitorsNumber,discipline,league,gender);
+                ((ArenaPanel)(arenaPanel)).setCompetition(competition);
                 //print details of the arena.
                 System.out.println(competition);
             }
@@ -210,7 +211,7 @@ public class MainScreen extends JFrame{
                 //(name, age , ((WinterCompetition)competition).getGender() , acceleration , maxSpeed)
                 String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
 
-                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+stringGender,new WinterSportsman(name, age , ((WinterCompetition)competition).getGender() , acceleration , maxSpeed , ((WinterCompetition)competition).getDiscipline()),((ArenaPanel)arenaPanel)));
+                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+stringGender,competitor,((ArenaPanel)arenaPanel)));
 
                 revalidate();
                 repaint();
@@ -228,16 +229,9 @@ public class MainScreen extends JFrame{
                  * start comtetition.
                  */
                 GameEngine.getInstance().setCompetition(competition);
+                String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
+                new Thread((ArenaPanel)arenaPanel).start();
                 new Thread(GameEngine.getInstance()).start();
-
-                //for(Competitor comp : competition.getActiveCompetitors())
-                while(competition.getActiveCompetitors().size()>0)
-                {
-                    revalidate();
-                    repaint();
-                }
-
-
 
             }
         });

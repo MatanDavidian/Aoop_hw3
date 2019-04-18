@@ -31,7 +31,7 @@ public class MobileEntity extends Entity implements IMobileEntity{
      * @see IMobileEntity#move(double)
      */
     @Override
-    public void move(double friction) {
+    public synchronized void move(double friction) {
         this.setSpeed(Math.min(this.maxSpeed,this.speed + this.getAcceleration()* (1-friction)));
         Point newLocation = this.getLocation().offset(this.speed,0);
         this.setLocation(newLocation);

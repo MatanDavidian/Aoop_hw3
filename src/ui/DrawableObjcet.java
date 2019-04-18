@@ -1,6 +1,7 @@
 package ui;
 
 import game.competition.Competitor;
+import game.entities.Entity;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,11 +14,11 @@ public class DrawableObjcet{
 
     private BufferedImage image;
     //private Point location;
-    private Competitor competitor;
+    private Entity competitor;
     private JPanel myArena;
     private final int size = 30;
 
-    public DrawableObjcet(String imgName , Competitor competitor , ArenaPanel myArena){
+    public DrawableObjcet(String imgName , Entity competitor , ArenaPanel myArena){
         try {
             this.image = ImageIO.read(new File(imgName+".png"));
         }
@@ -32,11 +33,11 @@ public class DrawableObjcet{
         g.drawImage(image , (int)competitor.getLocation().getY(),(int)competitor.getLocation().getX() , size ,size , myArena);
     }
 
-    public Competitor getCompetitor() {
+    public Entity getCompetitor() {
         return competitor;
     }
 
-    public void setCompetitor(Competitor competitor) {
+    public void setCompetitor(Entity competitor) {
         this.competitor = competitor;
     }
 

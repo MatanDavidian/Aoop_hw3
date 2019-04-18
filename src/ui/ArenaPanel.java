@@ -1,7 +1,9 @@
 package ui;
 
 import game.competition.Competition;
+import game.competition.WinterCompetition;
 import game.entities.Entity;
+import game.entities.sportsman.WinterSportsman;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import utilities.Point;
 
@@ -13,14 +15,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-public class ArenaPanel extends JPanel {
+import static java.lang.Thread.sleep;
+
+public class ArenaPanel extends JPanel implements Runnable {
 
     private BufferedImage image;
     private Vector<DrawableObjcet> competitors;
     private int width;
     private int height;
+    private Competition competition;
 
-
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
 
     public ArenaPanel(String arenaName) {
         competitors = new Vector<>();
@@ -37,6 +44,10 @@ public class ArenaPanel extends JPanel {
         super.paintComponent(g);
         if(image != null) {
             g.drawImage(image, 0, 0, width, height, this);
+            try {
+                sleep(1);
+            }
+            catch (Exception err){}
             if (competitors.size()> 0) {
 
                 int distacne = 0;
@@ -72,5 +83,17 @@ public class ArenaPanel extends JPanel {
     } catch (IOException e) {
         e.printStackTrace();
     }
+    }
+
+    @Override
+    public void run() {
+        while(competition.getActiveCompetitors().size()>0) {
+            this.repaint();
+            this.revalidate();
+            try {
+            } catch (Exception e) {
+
+            }
+        }
     }
 }
