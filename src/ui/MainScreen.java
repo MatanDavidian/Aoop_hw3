@@ -15,6 +15,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 
@@ -220,6 +221,8 @@ public class MainScreen extends JFrame{
                 new Thread(GameEngine.getInstance()).start();
                 for(Competitor comp : competition.getActiveCompetitors())
                 {
+                    Iterator value = (((ArenaPanel) arenaPanel).getCompetitors()).iterator();
+                    value.next().
                     ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(comp.getLocation().getX(),0) ,((ArenaPanel)arenaPanel)));
 
                     revalidate();
