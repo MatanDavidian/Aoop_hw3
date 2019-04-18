@@ -21,6 +21,8 @@ import java.util.concurrent.BrokenBarrierException;
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
+    private ArenaPanel arenaPanel;
+    private SidePanel sidePanel;
 
     public MainScreen() throws Exception {
         setSize(1000,700);
@@ -180,16 +182,27 @@ public class MainScreen extends JFrame{
                 }
                 // adding the arena details to competition
                 WinterSportsman competitor;
-                if(competition instanceof SkiCompetition)
-                    competitor= new Skier(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
-                else if(competition instanceof SnowboardCompetition)
-                    competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
+                String gender = ((WinterCompetition)competition).getGender().toString();
+                String compType="" ;
+                if(competition instanceof SkiCompetition) {
+                    competitor = new Skier(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                    compType = "Ski";
+                }
+                else if(competition instanceof SnowboardCompetition) {
+                    competitor = new Snowboarder(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                    compType = "Snowboard";
+                }
                 else
                     competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
                 competition.addCompetitor(competitor);
                 //print details of the arena.
                 System.out.println(competitor);
 
+
+                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(0,0) ,((ArenaPanel)arenaPanel)));
+
+                revalidate();
+                repaint();
             }
         });
         /**
@@ -277,8 +290,7 @@ public class MainScreen extends JFrame{
 
 
 
-    private ArenaPanel arenaPanel;
-    private SidePanel sidePanel;
+
 
 
 }
