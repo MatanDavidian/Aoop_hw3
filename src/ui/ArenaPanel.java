@@ -33,7 +33,7 @@ public class ArenaPanel extends JPanel {
         return image;
     }
 
-    public void setImage(String arenaName, int length) {
+    public void  setImage(String arenaName, int length){
         if (length <700 || length >900){
             throw new ValueException("Invalid input values! Please try again");
         }

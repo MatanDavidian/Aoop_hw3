@@ -5,9 +5,10 @@ import game.competition.Competition;
 import game.competition.Competitor;
 import utilities.ValidationUtils;
 
-public class GameEngine {
+public class GameEngine implements Runnable {
 
     private static GameEngine instance;
+    private Competition competition;
 
     /**
      * .
@@ -55,4 +56,18 @@ public class GameEngine {
         }
     }
 
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+    @Override
+    public void run() {
+        if (competition != null){
+            startRace(competition);
+        }
+    }
 }

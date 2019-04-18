@@ -6,10 +6,14 @@ import game.enums.Discipline;
 import game.enums.Gender;
 import game.enums.League;
 
+import java.util.Observable;
+
 /**
  * Created by itzhak on 24-Mar-19.
  */
 public class WinterCompetition extends Competition {
+
+
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
@@ -44,5 +48,15 @@ public class WinterCompetition extends Competition {
                     gender.equals(winterSportsman.getGender());
         }
         return false;
+    }
+    @Override
+    public void update(Observable o, Object arg) {
+
+    }
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+    public Gender getGender() {
+        return gender;
     }
 }

@@ -1,7 +1,7 @@
 package game.entities;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import utilities.Point;
-
 /**
  * Created by itzhak on 07-Mar-19.
  */
@@ -9,7 +9,10 @@ public class MobileEntity extends Entity implements IMobileEntity{
     private final double maxSpeed;
     private final double acceleration;
     private double speed;
-
+    private double friction = -1;
+    public void setFriction(double friction) {
+        this.friction = friction;
+    }
     /**
      * Ctor for a mobile entity in the game
      * @param initialSpeed initial speed of the entity
@@ -55,5 +58,24 @@ public class MobileEntity extends Entity implements IMobileEntity{
         return acceleration;
     }
     //endregion
+    /**
+     * in order to "strat()" u need
+     */
+    @Override
+    public void run() {
+        if(friction!=-1) {
+            move(friction);
+        }
+        else{
+            throw new ValueException("friction value is -1 , try to upddate friction");
+        }
+    }
 
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
 }

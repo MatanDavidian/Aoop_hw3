@@ -1,19 +1,21 @@
 package game.competition;
 
 import game.arena.IArena;
+import game.entities.MobileEntity;
+import game.entities.sportsman.Skier;
 import utilities.ValidationUtils;
-
 import java.util.ArrayList;
-
+import java.util.Observer;
 /**
  * Created by itzhak on 24-Mar-19.
  */
-public abstract class Competition {
+public abstract class Competition extends Thread implements Observer {
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
      * If in future tasks you will need to change them you could remove the final modifier and add a setter.
      */
+    Observer O;
     private IArena arena;
     private final ArrayList<Competitor> activeCompetitors;
     private final ArrayList<Competitor> finishedCompetitors;
@@ -57,7 +59,6 @@ public abstract class Competition {
             throw new IllegalArgumentException("Invalid competitor " + competitor);
         }
     }
-
     /**
      * Play a single turn of the game
      */
@@ -65,7 +66,13 @@ public abstract class Competition {
         ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
         for (Competitor competitor : tmp) {
             if (!arena.isFinished(competitor)) {
-                competitor.move(arena.getFriction());
+                ((MobileEntity)competitor).setFriction(arena.getFriction());
+                new Thread((MobileEntity)competitor).start();
+                try {
+                    sleep(100);
+                }
+                catch (Exception e){}
+                //competitor.move(arena.getFriction());
                 if (arena.isFinished(competitor)) {
                     finishedCompetitors.add(competitor);
                     activeCompetitors.remove(competitor);
@@ -90,5 +97,25 @@ public abstract class Competition {
      */
     public ArrayList<Competitor> getFinishedCompetitors() {
         return new ArrayList<>(finishedCompetitors);
+    }
+    public void notify(String msg)
+    {
+
+    }
+
+    public IArena getArena() {
+        return arena;
+    }
+
+    public void setArena(IArena arena) {
+        this.arena = arena;
+    }
+
+    public ArrayList<Competitor> getActiveCompetitors() {
+        return activeCompetitors;
+    }
+
+    public int getMaxCompetitors() {
+        return maxCompetitors;
     }
 }

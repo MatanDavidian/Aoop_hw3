@@ -24,7 +24,7 @@ public class SidePanel extends JPanel {
     private JComboBox<String> discipline;
     private JComboBox<String> league;
     private JComboBox<String> gender;
-    private JButton createCompetition;
+    JButton createCompetition;
 
     /**
      * add competitor part
@@ -93,12 +93,13 @@ public class SidePanel extends JPanel {
         this.startCompetition.setPreferredSize(new Dimension(125,25));
         this.showInfo.setPreferredSize(new Dimension(125,25));
 
-        this.setLayout(new GridLayout(4 , 1));
+        this.setLayout(new GridLayout(0 , 1));
         this.buildArenaPanel.setLayout(new GridLayout(8 , 1));
         this.createCompetitionPanel.setLayout(new GridLayout(11 , 1));
         this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
         this.startAndInfoPanel.setLayout(new GridLayout(2 , 1));
 
+/*
         this.buildArenaPanel.add(new JLabel("Build Arena"));
         this.buildArenaPanel.add(new JLabel("Arena Length"));
         this.buildArenaPanel.add(this.arenaLenght);
@@ -135,16 +136,69 @@ public class SidePanel extends JPanel {
         this.startAndInfoPanel.add(this.showInfo);
 
         this.setVisible(true);
+        */
 
-        this.add(this.buildArenaPanel);
-        this.add(this.createCompetitionPanel);
-        this.add(this.addCompetitorPanel);
-        this.add(this.startAndInfoPanel);
+        JSeparator js = new JSeparator();
+        js.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
+
+
+        this.add(new JLabel("<HTML><U><font color=blue><b>Build Arena</b></font></U></HTML>"));
+        this.add(new JLabel("Arena Length"));
+        this.add(this.arenaLenght);
+        this.add(new JLabel("Snow Surface"));
+        this.add(this.snowSurface);
+        this.add(new JLabel("Weather Condition"));
+        this.add(this.weatherCondition);
+        this.add(new JLabel(""));
+        this.add(this.buildArena);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
+
+
+
+        this.add(new JLabel("<HTML><U><font color=blue><b>Choose Competition</b></font></U></HTML>"));
+        this.add(this.chooseCompetition);
+        this.add(new JLabel("Max competitors number"));
+        this.add(this.maxCompetitorsNumber);
+        this.add(new JLabel("Discipline"));
+        this.add(this.discipline);
+        this.add(new JLabel("League"));
+        this.add(this.league);
+        this.add(new JLabel("Gender"));
+        this.add(this.gender);
+        this.add(new JLabel(""));
+        this.add(this.createCompetition);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
+
+
+        this.add(new JLabel("<HTML><U><font color=blue><b>Add competitor</b></font></U></HTML>"));
+        this.add(new JLabel("name"));
+        this.add(this.name);
+        this.add(new JLabel("Age"));
+        this.add(this.age);
+        this.add(new JLabel("Max speed"));
+        this.add(this.maxSpeed);
+        this.add(new JLabel("Acceleration"));
+        this.add(this.acceleration);
+        this.add(new JLabel(""));
+        this.add(this.addCompetitor);
+        this.add(new JLabel(""));
+        this.add(new JSeparator());
+
+
+        this.add(this.startCompetition);
+        this.add(this.showInfo);
+
+
+        this.setVisible(true);
 
 
 
 
     }
+
+
 
     public JPanel getBuildArenaPanel() {
         return buildArenaPanel;
@@ -250,7 +304,9 @@ public class SidePanel extends JPanel {
         this.addCompetitorPanel = addCompetitorPanel;
     }
 
-
+    public JTextField getNameFromTxtBox() {
+        return name;
+    }
     public void setName(JTextField name) {
         this.name = name;
     }
