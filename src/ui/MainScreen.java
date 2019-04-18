@@ -23,6 +23,10 @@ public class MainScreen extends JFrame{
     private WinterArena arena;
     private ArenaPanel arenaPanel;
     private SidePanel sidePanel;
+    private String compType;
+    private String gender;
+    private static int distance = 0;
+
 
     public MainScreen() throws Exception {
         setSize(1000,700);
@@ -182,10 +186,11 @@ public class MainScreen extends JFrame{
                 }
                 // adding the arena details to competition
                 WinterSportsman competitor;
-                String gender = ((WinterCompetition)competition).getGender().toString();
-                String compType="" ;
+                gender = ((WinterCompetition)competition).getGender().toString();
+                compType="" ;
                 if(competition instanceof SkiCompetition) {
                     competitor = new Skier(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+
                     compType = "Ski";
                 }
                 else if(competition instanceof SnowboardCompetition) {
@@ -199,7 +204,12 @@ public class MainScreen extends JFrame{
                 System.out.println(competitor);
 
 
-                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(0,0) ,((ArenaPanel)arenaPanel)));
+
+
+
+                //(name, age , ((WinterCompetition)competition).getGender() , acceleration , maxSpeed)
+
+                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender,new WinterSportsman(name, age , ((WinterCompetition)competition).getGender() , acceleration , maxSpeed , ((WinterCompetition)competition).getDiscipline()),((ArenaPanel)arenaPanel)));
 
                 revalidate();
                 repaint();
@@ -218,13 +228,14 @@ public class MainScreen extends JFrame{
                  */
                 GameEngine.getInstance().setCompetition(competition);
                 new Thread(GameEngine.getInstance()).start();
+
                 for(Competitor comp : competition.getActiveCompetitors())
                 {
-                    ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(comp.getLocation().getX(),0) ,((ArenaPanel)arenaPanel)));
 
                     revalidate();
                     repaint();
                 }
+
 
 
             }

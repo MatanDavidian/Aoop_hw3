@@ -1,7 +1,9 @@
 package ui;
 
 import game.competition.Competition;
+import game.entities.Entity;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+import utilities.Point;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,8 +42,8 @@ public class ArenaPanel extends JPanel {
                 int distacne = 0;
 
                 for (DrawableObjcet comp : competitors) {
-
-                    comp.setXLocation(distacne);
+                    Entity dis =  ((Entity)comp.getCompetitor());
+                    dis.setLocation(new Point(distacne , (int)dis.getLocation().getX()));
                     distacne += comp.getSize() + 10;
                     comp.draw(g);
             }
