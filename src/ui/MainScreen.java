@@ -9,13 +9,15 @@ import java.util.concurrent.BrokenBarrierException;
 public class MainScreen extends JFrame{
     public MainScreen()
     {
-        setSize(1000,700);
+        setSize(1000,800);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
+
         this.add(arenaPanel, BorderLayout.CENTER);
         this.add(sidePanel, BorderLayout.EAST);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         ((SidePanel) sidePanel).buildArena.addActionListener(new ActionListener() {
             @Override

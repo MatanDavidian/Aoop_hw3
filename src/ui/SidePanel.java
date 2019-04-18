@@ -46,9 +46,14 @@ public class SidePanel extends JPanel {
 
     public SidePanel() {
         this.addCompetitorPanel = new JPanel();
+        this.addCompetitorPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         this.buildArenaPanel = new JPanel();
+        this.buildArenaPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         this.createCompetitionPanel = new JPanel();
+        this.createCompetitionPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         this.startAndInfoPanel = new JPanel();
+        this.startAndInfoPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
 
         this.setBackground(Color.CYAN);
         this.arenaLenght = new JTextField();
@@ -128,6 +133,7 @@ public class SidePanel extends JPanel {
 
         this.startAndInfoPanel.add(this.startCompetition);
         this.startAndInfoPanel.add(this.showInfo);
+
         this.setVisible(true);
 
         this.add(this.buildArenaPanel);
