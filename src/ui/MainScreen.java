@@ -11,20 +11,18 @@ import game.enums.*;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import sun.awt.SunHints;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
+    private ArenaPanel arenaPanel;
+    private SidePanel sidePanel;
 
     public MainScreen() throws Exception {
         setSize(1000,700);
@@ -184,24 +182,25 @@ public class MainScreen extends JFrame{
                 }
                 // adding the arena details to competition
                 WinterSportsman competitor;
-                if(competition instanceof SkiCompetition)
-                    competitor= new Skier(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
-                else if(competition instanceof SnowboardCompetition)
-                    competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
+                String gender = ((WinterCompetition)competition).getGender().toString();
+                String compType="" ;
+                if(competition instanceof SkiCompetition) {
+                    competitor = new Skier(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                    compType = "Ski";
+                }
+                else if(competition instanceof SnowboardCompetition) {
+                    competitor = new Snowboarder(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                    compType = "Snowboard";
+                }
                 else
                     competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
                 competition.addCompetitor(competitor);
-
-                try {
-                    //set image according to name and length.
-                    ((ArenaPanel) arenaPanel).addPlayer();
-
-                }
-                catch (ValueException ex){
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
                 //print details of the arena.
                 System.out.println(competitor);
+
+
+                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(0,0) ,((ArenaPanel)arenaPanel)));
+
                 revalidate();
                 repaint();
             }
@@ -219,7 +218,13 @@ public class MainScreen extends JFrame{
                  */
                 GameEngine.getInstance().setCompetition(competition);
                 new Thread(GameEngine.getInstance()).start();
+                for(Competitor comp : competition.getActiveCompetitors())
+                {
+                    ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(comp.getLocation().getX(),0) ,((ArenaPanel)arenaPanel)));
 
+                    revalidate();
+                    repaint();
+                }
 
 
             }
@@ -264,7 +269,7 @@ public class MainScreen extends JFrame{
                             dataOfCompetitor.add(((Sportsman)competitor).getSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getMaxSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getLocation()+"");
-                            dataOfCompetitor.add("NO");                            data.add(dataOfCompetitor);
+                            dataOfCompetitor.add("YES");                            data.add(dataOfCompetitor);
                         }
                         catch (Exception ex){
                             ex.printStackTrace();
@@ -288,4 +293,10 @@ public class MainScreen extends JFrame{
         });
 
     }
+
+
+
+
+
+
 }
