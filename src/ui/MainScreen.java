@@ -218,7 +218,13 @@ public class MainScreen extends JFrame{
                  */
                 GameEngine.getInstance().setCompetition(competition);
                 new Thread(GameEngine.getInstance()).start();
+                for(Competitor comp : competition.getActiveCompetitors())
+                {
+                    ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+gender, new Point(comp.getLocation().getX(),0) ,((ArenaPanel)arenaPanel)));
 
+                    revalidate();
+                    repaint();
+                }
 
 
             }
