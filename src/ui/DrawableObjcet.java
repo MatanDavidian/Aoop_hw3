@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import utilities.Point;
 
 public class DrawableObjcet{
 
@@ -16,7 +17,7 @@ public class DrawableObjcet{
     //private Point location;
     private Entity competitor;
     private JPanel myArena;
-    private final int size = 30;
+    private final int size = 40;
 
     public DrawableObjcet(String imgName , Entity competitor , ArenaPanel myArena){
         try {

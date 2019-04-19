@@ -44,10 +44,6 @@ public class ArenaPanel extends JPanel implements Runnable {
         super.paintComponent(g);
         if(image != null) {
             g.drawImage(image, 0, 0, width, height, this);
-            try {
-                sleep(1);
-            }
-            catch (Exception err){}
             if (competitors.size()> 0) {
 
                 int distacne = 0;
@@ -72,7 +68,7 @@ public class ArenaPanel extends JPanel implements Runnable {
             throw new ValueException("Invalid input values! Please try again");
         }
         height = length;
-        width = 875;
+        width = 1000;
         try{
             if (arenaName == "None"){
                 image = null;
@@ -91,6 +87,7 @@ public class ArenaPanel extends JPanel implements Runnable {
             this.repaint();
             this.revalidate();
             try {
+                sleep(30);
             } catch (Exception e) {
 
             }

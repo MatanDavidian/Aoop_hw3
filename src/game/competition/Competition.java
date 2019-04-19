@@ -1,8 +1,10 @@
 package game.competition;
 
 import game.arena.IArena;
+import game.arena.WinterArena;
 import game.entities.MobileEntity;
 import game.entities.sportsman.Skier;
+import utilities.Point;
 import utilities.ValidationUtils;
 import java.util.ArrayList;
 import java.util.Observer;
@@ -69,6 +71,15 @@ public abstract class Competition extends Thread implements Observer, Runnable {
                 ((MobileEntity)competitor).setFriction(arena.getFriction());
                 //new Thread((MobileEntity)competitor).start();
                 competitor.move(arena.getFriction());
+                if(competitor.getLocation().getX()>((WinterArena)arena).getLength()) {
+                    ((MobileEntity) competitor).setLocation(new Point(((WinterArena)arena).getLength(),competitor.getLocation().getY()));
+                }
+
+                try {
+                    sleep(100);
+                } catch (Exception e) {
+
+                }
                 if (arena.isFinished(competitor)) {
                     finishedCompetitors.add(competitor);
                     activeCompetitors.remove(competitor);

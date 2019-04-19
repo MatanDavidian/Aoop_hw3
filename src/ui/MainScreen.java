@@ -29,7 +29,7 @@ public class MainScreen extends JFrame{
 
 
     public MainScreen() throws Exception {
-        setSize(1000,700);
+        setSize(1175,700);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
@@ -76,11 +76,12 @@ public class MainScreen extends JFrame{
 
                 // adding the arena details to competition
                 arena = new WinterArena(arenaLength , SnowSurface.valueOf(arenaSnowSurface) , WeatherCondition.valueOf(arenaWeatherCondition));
-
+                setSize(1175,arenaLength+80);
                 //print details of the arena.
                 System.out.println(arena);
 
                 //painting the canvas.
+                ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
                 revalidate();
                 repaint();
             }
@@ -143,6 +144,9 @@ public class MainScreen extends JFrame{
                 else if (competitionType.equals("SnowboardCompetition"))
                     competition = new SnowboardCompetition(arena,maxCompetitorsNumber,discipline,league,gender);
                 ((ArenaPanel)(arenaPanel)).setCompetition(competition);
+                ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                revalidate();
+                repaint();
                 //print details of the arena.
                 System.out.println(competition);
             }
@@ -229,7 +233,6 @@ public class MainScreen extends JFrame{
                  * start comtetition.
                  */
                 GameEngine.getInstance().setCompetition(competition);
-                String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
                 new Thread((ArenaPanel)arenaPanel).start();
                 new Thread(GameEngine.getInstance()).start();
 
@@ -275,7 +278,7 @@ public class MainScreen extends JFrame{
                             dataOfCompetitor.add(((Sportsman)competitor).getSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getMaxSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getLocation()+"");
-                            dataOfCompetitor.add("YES");                            data.add(dataOfCompetitor);
+                            dataOfCompetitor.add("NO");                            data.add(dataOfCompetitor);
                         }
                         catch (Exception ex){
                             ex.printStackTrace();
