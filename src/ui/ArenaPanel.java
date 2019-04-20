@@ -93,4 +93,5 @@ public class ArenaPanel extends JPanel implements Runnable {
             }
         }
     }
+
 }

@@ -41,6 +41,9 @@ public class MobileEntity extends Entity implements IMobileEntity{
         this.setSpeed(Math.min(this.maxSpeed,this.speed + this.getAcceleration()* (1-friction)));
         Point newLocation = this.getLocation().offset(this.speed,0);
         this.setLocation(newLocation);
+        if(getLocation().getX()>((WinterArena)myArena).getLength()) {
+           setLocation(new Point(((WinterArena)myArena).getLength(),getLocation().getY()));
+        }
     }
     //endregion
 
@@ -86,6 +89,8 @@ public class MobileEntity extends Entity implements IMobileEntity{
             throw new ValueException("friction value is -1 , try to upddate friction");
         }
     }
+
+
     public boolean isFinished(int len)
     {
         return this.getLocation().getX()>len;

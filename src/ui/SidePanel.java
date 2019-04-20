@@ -61,7 +61,7 @@ public class SidePanel extends JPanel {
         this.weatherCondition = new JComboBox<>(new String[] {"Sunny" , "Stormy" , "Cloudy"});
         this.buildArena = new JButton("Build Arena");
         this.chooseCompetition = new JComboBox<>(new String[] {"Ski" , "Snowboard"});
-        this.maxCompetitorsNumber = new JTextField();
+        this.maxCompetitorsNumber = new JTextField("10");
         this.discipline = new JComboBox<>(new String[]{ "Slalom", "Giant Slaloom", "Downhill", "Freestyle"});
         this.league = new JComboBox<>(new String[]{"Junior" , "Adult" , "Senior"});
         this.gender = new JComboBox<>(new String[] {"Male" , "Female"});

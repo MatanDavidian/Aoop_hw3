@@ -131,5 +131,6 @@ public abstract class Competition extends Thread implements Observer, Runnable {
     public void update(Observable o, Object arg) {
         finishedCompetitors.add((Competitor) o);
         activeCompetitors.remove(o);
+
     }
 }

@@ -15,6 +15,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 
@@ -26,10 +28,12 @@ public class MainScreen extends JFrame{
     private String compType;
     private String gender;
     private static int distance = 0;
-
+    private final int widthSize=1000;
+    private final int heightSize=700;
+    private static boolean isTAlive=false;
 
     public MainScreen() throws Exception {
-        setSize(1175,700);
+        setSize(widthSize,heightSize);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
@@ -74,17 +78,20 @@ public class MainScreen extends JFrame{
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
 
-                // adding the arena details to competition
-                arena = new WinterArena(arenaLength , SnowSurface.valueOf(arenaSnowSurface) , WeatherCondition.valueOf(arenaWeatherCondition));
-                setSize(1175,arenaLength+80);
-                //print details of the arena.
-                System.out.println(arena);
+                if(competition==null || competition.getActiveCompetitors().size()==0) {
+                    // adding the arena details to competition
+                    arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
+                    setSize(1175, arenaLength + 80);
+                    //print details of the arena.
+                    System.out.println(arena);
 
-                //painting the canvas.
-                ((ArenaPanel) arenaPanel).setCompetition(null);
-                ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
-                revalidate();
-                repaint();
+                    //painting the canvas.
+                    ((ArenaPanel) arenaPanel).setCompetition(null);
+                    ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                    revalidate();
+                    repaint();
+                }
+
             }
         });
         /**
@@ -139,13 +146,29 @@ public class MainScreen extends JFrame{
                     gender= Gender.FEMALE;
                 else
                     gender= Gender.MALE;
-                // adding the arena details to competition
-                if(competitionType.equals("SkiCompetition"))
-                     competition = new SkiCompetition(arena,maxCompetitorsNumber,discipline,league,gender);
-                else if (competitionType.equals("SnowboardCompetition"))
-                    competition = new SnowboardCompetition(arena,maxCompetitorsNumber,discipline,league,gender);
+
+                Class c;
+                ClassLoader cl = ClassLoader.getSystemClassLoader();
+                try {
+
+                    c = cl.loadClass("game.competition." + competitionType);
+                    Constructor con = c.getConstructor(WinterArena.class, int.class, Discipline.class, League.class, Gender.class);
+                    competition = new WinterCompetition( (WinterCompetition) con.newInstance(arena, maxCompetitorsNumber, discipline, league, gender));
+
+                } catch (InstantiationException ex) {
+                    ex.printStackTrace();
+                } catch (InvocationTargetException ex) {
+                    ex.printStackTrace();
+                } catch (NoSuchMethodException ex) {
+                    ex.printStackTrace();
+                } catch (IllegalAccessException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
                 ((ArenaPanel)(arenaPanel)).setCompetition(competition);
                 ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+
                 revalidate();
                 repaint();
                 //print details of the arena.
@@ -194,32 +217,46 @@ public class MainScreen extends JFrame{
                 WinterSportsman competitor;
                 gender = ((WinterCompetition)competition).getGender().toString();
                 compType="" ;
-                if(competition instanceof SkiCompetition) {
-                    competitor = new Skier(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
-
+                String competitorType;
+                String competitionType = ((SidePanel) sidePanel).getChooseCompetition().getSelectedItem().toString();
+                if(competitionType=="Ski")
+                {
+                    competitorType="Skier";
                     compType = "Ski";
                 }
-                else if(competition instanceof SnowboardCompetition) {
-                    competitor = new Snowboarder(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                else
+                {
+                    competitorType="Snowboarder";
                     compType = "Snowboard";
                 }
-                else
-                    competitor= new Snowboarder(name,age,((WinterCompetition)competition).getGender(),acceleration,maxSpeed,((WinterCompetition)competition).getDiscipline());
-                competition.addCompetitor(competitor);
-                //print details of the arena.
-                System.out.println(competitor);
+                Class c;
+                ClassLoader cl = ClassLoader.getSystemClassLoader();
+                try {
 
+                    c = cl.loadClass("game.entities.sportsman." + competitorType);
+                    Constructor con = c.getConstructor(String.class, double.class, Gender.class, double.class, double.class, Discipline.class);
+                    competitor = (WinterSportsman) con.newInstance(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+                    competition.addCompetitor(competitor);
+                    //print details of the competitor.
+                    System.out.println(competitor);
+                    String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
+                    ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+stringGender,competitor,((ArenaPanel)arenaPanel)));
+                    revalidate();
+                    repaint();
+                    System.out.println( ((ArenaPanel) arenaPanel).getCompetitors());
 
+                } catch (InstantiationException ex) {
+                    ex.printStackTrace();
+                } catch (InvocationTargetException ex) {
+                    ex.printStackTrace();
+                } catch (NoSuchMethodException ex) {
+                    ex.printStackTrace();
+                } catch (IllegalAccessException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
 
-
-
-                //(name, age , ((WinterCompetition)competition).getGender() , acceleration , maxSpeed)
-                String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
-
-                ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+stringGender,competitor,((ArenaPanel)arenaPanel)));
-
-                revalidate();
-                repaint();
             }
         });
         /**
@@ -233,10 +270,23 @@ public class MainScreen extends JFrame{
                 /**
                  * start comtetition.
                  */
+                Thread T =new Thread(((ArenaPanel)arenaPanel));
                 GameEngine.getInstance().setCompetition(competition);
-                new Thread((ArenaPanel)arenaPanel).start();
-                new Thread(GameEngine.getInstance()).start();
-
+                try {
+                    T.start();
+                    isTAlive=true;
+                    new Thread(GameEngine.getInstance()).start();
+                }
+                catch (Exception e1)
+                {
+                    T.stop();
+                    isTAlive=false;
+                    e1.printStackTrace();
+                }
+                if(!T.isAlive())
+                {
+                    isTAlive=false;
+                }
             }
         });
 

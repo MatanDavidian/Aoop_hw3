@@ -38,7 +38,12 @@ public class WinterCompetition extends Competition {
         this.league = league;
         this.gender = gender;
     }
-
+    public WinterCompetition(WinterCompetition other) {
+        super(other.getArena(), other.getMaxCompetitors());
+        this.discipline = other.discipline;
+        this.league = other.league;
+        this.gender = other.gender;
+    }
     @Override
     protected boolean isValidCompetitor(Competitor competitor) {
         if (competitor instanceof WinterSportsman) {
