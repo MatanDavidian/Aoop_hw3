@@ -7,6 +7,7 @@ import game.entities.sportsman.Skier;
 import utilities.Point;
 import utilities.ValidationUtils;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Observer;
 /**
  * Created by itzhak on 24-Mar-19.
@@ -64,22 +65,18 @@ public abstract class Competition extends Thread implements Observer, Runnable {
     /**
      * Play a single turn of the game
      */
-    public void playTurn() {
+    public void startCompetition() {
         ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
         for (Competitor competitor : tmp) {
+            ((MobileEntity) competitor).addObserver(this);
             if (!arena.isFinished(competitor)) {
-                ((MobileEntity)competitor).setFriction(arena.getFriction());
-                //new Thread((MobileEntity)competitor).start();
-                competitor.move(arena.getFriction());
+                ((MobileEntity)competitor).setMyArena(arena);
+                new Thread((MobileEntity)competitor).start();
+                //competitor.move(arena.getFriction());
                 if(competitor.getLocation().getX()>((WinterArena)arena).getLength()) {
                     ((MobileEntity) competitor).setLocation(new Point(((WinterArena)arena).getLength(),competitor.getLocation().getY()));
                 }
 
-                try {
-                    sleep(100);
-                } catch (Exception e) {
-
-                }
                 if (arena.isFinished(competitor)) {
                     finishedCompetitors.add(competitor);
                     activeCompetitors.remove(competitor);
@@ -127,6 +124,12 @@ public abstract class Competition extends Thread implements Observer, Runnable {
     }
     public void run()
     {
-        playTurn();
+        startCompetition();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        finishedCompetitors.add((Competitor) o);
+        activeCompetitors.remove(o);
     }
 }

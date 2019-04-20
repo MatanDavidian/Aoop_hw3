@@ -49,10 +49,7 @@ public class WinterCompetition extends Competition {
         }
         return false;
     }
-    @Override
-    public void update(Observable o, Object arg) {
 
-    }
     public Discipline getDiscipline() {
         return discipline;
     }

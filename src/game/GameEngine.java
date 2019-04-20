@@ -38,7 +38,10 @@ public class GameEngine implements Runnable {
      */
     public void startRace(Competition competition) {
         ValidationUtils.assertNotNull(competition);
-        int step;
+        int step=0;
+        competition.startCompetition();
+        //here was loop that call to play turn at competition to make a step
+        /**
         for (step = 0; competition.hasActiveCompetitors(); step++) {
             competition.playTurn();
             try{
@@ -46,6 +49,7 @@ public class GameEngine implements Runnable {
             }
             catch (Exception e) {}
         }
+         **/
         System.out.println("race finished in " + step + " steps");
         printResults(competition);
     }

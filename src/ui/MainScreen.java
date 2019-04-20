@@ -81,6 +81,7 @@ public class MainScreen extends JFrame{
                 System.out.println(arena);
 
                 //painting the canvas.
+                ((ArenaPanel) arenaPanel).setCompetition(null);
                 ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
                 revalidate();
                 repaint();
@@ -255,7 +256,7 @@ public class MainScreen extends JFrame{
                     columnNames.add("Location");
                     columnNames.add("Finished");
                     Vector<Object> data = new Vector<>();
-                    for (Competitor competitor : competition.getFinishedCompetitors()){
+                    for (Object competitor : competition.getFinishedCompetitors()){
                         try {
                             Vector<String> dataOfCompetitor =new Vector<>();
                             dataOfCompetitor.add(((Sportsman)competitor).getName() );

@@ -1,7 +1,12 @@
 package game.entities;
 
+import game.arena.IArena;
+import game.arena.WinterArena;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import utilities.Point;
+
+import static java.lang.Thread.sleep;
+
 /**
  * Created by itzhak on 07-Mar-19.
  */
@@ -10,6 +15,7 @@ public class MobileEntity extends Entity implements IMobileEntity{
     private final double acceleration;
     private double speed;
     private double friction = -1;
+    private IArena myArena;
     public void setFriction(double friction) {
         this.friction = friction;
     }
@@ -64,18 +70,35 @@ public class MobileEntity extends Entity implements IMobileEntity{
     @Override
     public void run() {
         if(friction!=-1) {
-            move(friction);
+            while (!isFinished((int)((WinterArena)myArena).getLength())) {
+                move(friction);
+                try {
+                    sleep(100);
+                } catch (Exception e) {
+
+                }
+            }
+            System.out.println(this.countObservers());
+            setChanged();
+            notifyObservers("Finished");
         }
         else{
             throw new ValueException("friction value is -1 , try to upddate friction");
         }
     }
-
+    public boolean isFinished(int len)
+    {
+        return this.getLocation().getX()>len;
+    }
     public double getMaxSpeed() {
         return maxSpeed;
     }
 
     public double getSpeed() {
         return speed;
+    }
+    public void setMyArena(IArena myArena) {
+        this.myArena = myArena;
+        this.friction = myArena.getFriction();
     }
 }
