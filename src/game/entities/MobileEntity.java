@@ -93,7 +93,7 @@ public class MobileEntity extends Entity implements IMobileEntity{
 
     public boolean isFinished(int len)
     {
-        return this.getLocation().getX()>len;
+        return this.getLocation().getX()>=len;
     }
     public double getMaxSpeed() {
         return maxSpeed;

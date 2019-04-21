@@ -18,20 +18,21 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
-import java.util.concurrent.BrokenBarrierException;
 
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
-    private ArenaPanel arenaPanel= new ArenaPanel("None");
-    private SidePanel sidePanel;
+    //private ArenaPanel arenaPanel= new ArenaPanel("None");
+    //private SidePanel sidePanel;
     private String compType;
     private String gender;
-    private static int distance = 0;
-    private final int widthSize=1000;
-    private final int heightSize=700;
+    //private static int distance = 0;
+    private int widthSize=1175;
+    private int heightSize=700;
     private static boolean isTAlive=false;
-
+    private static String stage="build arena";
+    //private static String competitionCondition="not Started";
+    private static String cType;
     public MainScreen() throws Exception {
         setSize(widthSize,heightSize);
         this.setTitle("Competition");
@@ -54,42 +55,56 @@ public class MainScreen extends JFrame{
                 /**
                  * setting the arena.
                  */
-                String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
-                String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
-                String arenaSnowSurface = ((SidePanel) sidePanel).getSnowSurface().getSelectedItem().toString().toUpperCase();
-                String arenaWeatherCondition = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString().toUpperCase();
-                int arenaLength = 0;
-                /**
-                 * if arenaLengthString is not int , the value of arenaLength will be zero.
-                 */
-                try {
-                    arenaLength = Integer.parseInt(arenaLengthString);
-                }
-                catch (NumberFormatException ex){
-                    arenaLength = 0;
-                }
+                if(stage.equals("build arena") || stage.equals("create competition"))
+                {
+                    String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
+                    String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
+                    String arenaSnowSurface = ((SidePanel) sidePanel).getSnowSurface().getSelectedItem().toString().toUpperCase();
+                    String arenaWeatherCondition = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString().toUpperCase();
+                    int arenaLength = 0;
+                    /**
+                     * if arenaLengthString is not int , the value of arenaLength will be zero.
+                     */
+                    try {
+                        arenaLength = Integer.parseInt(arenaLengthString);
+                    }
+                    catch (NumberFormatException ex){
+                        arenaLength = 700;
+                        try {
+                            throw new ValueException("You must input int between 700-900");
+                        }
+                        catch (ValueException ex1){
+                            JOptionPane.showMessageDialog(null, ex1.getMessage());
+                        }
+                    }
+                    try {
+                        //set image according to name and length.
+                        ((ArenaPanel) arenaPanel).setImage(arenaName , arenaLength);
+                    }
 
+                    catch (ValueException ex){
 
-                try {
-                    //set image according to name and length.
-                    ((ArenaPanel) arenaPanel).setImage(arenaName , arenaLength);
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+
+                    if(competition==null || competition.getActiveCompetitors().size()==0) {
+                        // adding the arena details to competition
+                        arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
+                        heightSize=arenaLength + 80;
+                        setSize(1175,heightSize);
+                        //print details of the arena.
+                        System.out.println(arena);
+
+                        //painting the canvas.
+                        ((ArenaPanel) arenaPanel).setCompetition(null);
+                        ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                        revalidate();
+                        repaint();
+                        stage = "create competition";
+                    }
                 }
-                catch (ValueException ex){
-                    JOptionPane.showMessageDialog(null, ex.getMessage());
-                }
-
-                if(competition==null || competition.getActiveCompetitors().size()==0) {
-                    // adding the arena details to competition
-                    arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
-                    setSize(1175, arenaLength + 80);
-                    //print details of the arena.
-                    System.out.println(arena);
-
-                    //painting the canvas.
-                    ((ArenaPanel) arenaPanel).setCompetition(null);
-                    ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
-                    revalidate();
-                    repaint();
+                else {
+                    JOptionPane.showMessageDialog(null, "Right now you need to "+stage);
                 }
 
             }
@@ -105,74 +120,90 @@ public class MainScreen extends JFrame{
                 /**
                  * setting the Competition.
                  */
-                String competitionType = ((SidePanel) sidePanel).getChooseCompetition().getSelectedItem().toString() + "Competition";
-                String stringMaxCompetitorsNumber = ((SidePanel) sidePanel).getMaxCompetitorsNumber().getText();
-                int maxCompetitorsNumber;
-                try {
-                    maxCompetitorsNumber = Integer.parseInt(stringMaxCompetitorsNumber);
+                if(((ArenaPanel) arenaPanel).getCompetition()!=null || stage.equals("create competition")) {
+                    String competitionType = ((SidePanel) sidePanel).getChooseCompetition().getSelectedItem().toString() + "Competition";
+                    cType=competitionType;
+                    String stringMaxCompetitorsNumber = ((SidePanel) sidePanel).getMaxCompetitorsNumber().getText();
+                    int maxCompetitorsNumber;
+                    try {
+                        maxCompetitorsNumber = Integer.parseInt(stringMaxCompetitorsNumber);
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Error! enter a number at max competitors number, set by default to 10..");
+                        System.out.println("Error! enter a number at max competitors number, set by default to 10.");
+                        maxCompetitorsNumber = 10;
+                    }
+
+                    String stringDiscipline = ((SidePanel) sidePanel).getDiscipline().getSelectedItem().toString();
+                    Discipline discipline;
+                    if (stringDiscipline == "Slalom")
+                        discipline = Discipline.SLALOM;
+                    else if (stringDiscipline == "Giant Slalom")
+                        discipline = Discipline.GIANT_SLALOM;
+                    else if (stringDiscipline == "Downhill")
+                        discipline = Discipline.DOWNHILL;
+                    else if (stringDiscipline == "Freestyle")
+                        discipline = Discipline.FREESTYLE;
+                    else
+                        discipline = Discipline.FREESTYLE;
+                    String stringLeague = ((SidePanel) sidePanel).getLeague().getSelectedItem().toString();
+                    League league;
+                    if (stringLeague == "Junior")
+                        league = League.JUNIOR;
+                    else if (stringLeague == "Adult")
+                        league = League.ADULT;
+                    else if (stringLeague == "Senior")
+                        league = League.SENIOR;
+                    else
+                        league = League.JUNIOR;
+                    String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
+                    Gender gender;
+                    if (stringGender == "Male")
+                        gender = Gender.MALE;
+                    else if (stringGender == "Female")
+                        gender = Gender.FEMALE;
+                    else
+                        gender = Gender.MALE;
+
+                    Class c;
+                    ClassLoader cl = ClassLoader.getSystemClassLoader();
+                    try {
+
+                        c = cl.loadClass("game.competition." + competitionType);
+                        Constructor con = c.getConstructor(WinterArena.class, int.class, Discipline.class, League.class, Gender.class);
+                        competition = new WinterCompetition((WinterCompetition) con.newInstance(arena, maxCompetitorsNumber, discipline, league, gender));
+
+                    } catch (InstantiationException ex) {
+                        ex.printStackTrace();
+                    } catch (InvocationTargetException ex) {
+                        ex.printStackTrace();
+                    } catch (NoSuchMethodException ex) {
+                        ex.printStackTrace();
+                    } catch (IllegalAccessException ex) {
+                        ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                    ((ArenaPanel) (arenaPanel)).setCompetition(competition);
+                    ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                    //increase the arena width
+                    if(maxCompetitorsNumber*50>((ArenaPanel) arenaPanel).getWidth()) {
+                        ((ArenaPanel) arenaPanel).setWidth(maxCompetitorsNumber*50);
+                        ((ArenaPanel)arenaPanel).revalidate();
+                        ((ArenaPanel)arenaPanel).repaint();
+                        pack();
+                        widthSize=(maxCompetitorsNumber*50)+175;
+                        setSize(widthSize,heightSize);
+                    }
+                    revalidate();
+                    repaint();
+                    //print details of the arena.
+                    System.out.println(competition);
+                    stage="add competitors";
                 }
-                catch (NumberFormatException ex){
-                    System.out.println("Error! enter a number at max competitors number.");
-                    maxCompetitorsNumber = 0;
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Right now you need to "+stage);
                 }
-
-                String stringDiscipline = ((SidePanel) sidePanel).getDiscipline().getSelectedItem().toString();
-                Discipline discipline;
-                if(stringDiscipline=="Slalom")
-                    discipline= Discipline.SLALOM;
-                else if(stringDiscipline=="Giant Slalom")
-                    discipline= Discipline.GIANT_SLALOM;
-                else if(stringDiscipline=="Downhill")
-                    discipline= Discipline.DOWNHILL;
-                else if(stringDiscipline=="Freestyle")
-                    discipline= Discipline.FREESTYLE;
-                else
-                    discipline= Discipline.FREESTYLE;
-                String stringLeague = ((SidePanel) sidePanel).getLeague().getSelectedItem().toString();
-                League league;
-                if(stringLeague=="Junior")
-                    league= League.JUNIOR;
-                else if(stringLeague=="Adult")
-                    league= League.ADULT;
-                else if(stringLeague=="Senior")
-                    league= League.SENIOR;
-                else
-                    league= League.JUNIOR;
-                String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
-                Gender gender;
-                if(stringGender=="Male")
-                    gender= Gender.MALE;
-                else if(stringGender=="Female")
-                    gender= Gender.FEMALE;
-                else
-                    gender= Gender.MALE;
-
-                Class c;
-                ClassLoader cl = ClassLoader.getSystemClassLoader();
-                try {
-
-                    c = cl.loadClass("game.competition." + competitionType);
-                    Constructor con = c.getConstructor(WinterArena.class, int.class, Discipline.class, League.class, Gender.class);
-                    competition = new WinterCompetition( (WinterCompetition) con.newInstance(arena, maxCompetitorsNumber, discipline, league, gender));
-
-                } catch (InstantiationException ex) {
-                    ex.printStackTrace();
-                } catch (InvocationTargetException ex) {
-                    ex.printStackTrace();
-                } catch (NoSuchMethodException ex) {
-                    ex.printStackTrace();
-                } catch (IllegalAccessException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-                ((ArenaPanel)(arenaPanel)).setCompetition(competition);
-                ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
-
-                revalidate();
-                repaint();
-                //print details of the arena.
-                System.out.println(competition);
             }
         });
 
@@ -188,75 +219,95 @@ public class MainScreen extends JFrame{
                 /**
                  * setting the competitor.
                  */
-                String name = ((SidePanel) sidePanel).getNameFromTxtBox().getText();
-                String stringAge = ((SidePanel) sidePanel).getAge().getText();
-                int age;
-                try {
-                    age = Integer.parseInt(stringAge);
-                }
-                catch (NumberFormatException ex){
-                    throw new ValueException("Wrong age value");
-                }
-                String stringMaxSpeed = ((SidePanel) sidePanel).getMaxSpeed().getText();
-                int maxSpeed;
-                try {
-                    maxSpeed = Integer.parseInt(stringMaxSpeed);
-                }
-                catch (NumberFormatException ex){
-                    throw new ValueException("Wrong max speed value");
-                }
-                String stringAcceleration = ((SidePanel) sidePanel).getAcceleration().getText();
-                int acceleration;
-                try {
-                    acceleration = Integer.parseInt(stringAcceleration);
-                }
-                catch (NumberFormatException ex){
-                    throw new ValueException("Wrong max speed value");
-                }
-                // adding the arena details to competition
-                WinterSportsman competitor;
-                gender = ((WinterCompetition)competition).getGender().toString();
-                compType="" ;
-                String competitorType;
-                String competitionType = ((SidePanel) sidePanel).getChooseCompetition().getSelectedItem().toString();
-                if(competitionType=="Ski")
-                {
-                    competitorType="Skier";
-                    compType = "Ski";
+                if(stage.equals("add competitors") || stage.equals("start competition")) {
+                    String name = ((SidePanel) sidePanel).getNameFromTxtBox().getText();
+                    String stringAge = ((SidePanel) sidePanel).getAge().getText();
+                    int age;
+                    try {
+                        age = Integer.parseInt(stringAge);
+                    } catch (NumberFormatException ex) {
+                        throw new ValueException("Wrong age value");
+                    }
+                    String stringMaxSpeed = ((SidePanel) sidePanel).getMaxSpeed().getText();
+                    int maxSpeed;
+                    try {
+                        maxSpeed = Integer.parseInt(stringMaxSpeed);
+                    } catch (NumberFormatException ex) {
+                        throw new ValueException("Wrong max speed value");
+                    }
+                    String stringAcceleration = ((SidePanel) sidePanel).getAcceleration().getText();
+                    int acceleration;
+                    try {
+                        acceleration = Integer.parseInt(stringAcceleration);
+                    } catch (NumberFormatException ex) {
+                        throw new ValueException("Wrong max speed value");
+                    }
+                    // adding the arena details to competition
+                    WinterSportsman competitor;
+                    gender = ((WinterCompetition) competition).getGender().toString();
+                    compType = "";
+                    String competitorType="";
+                    String competitionType=cType;
+                    if (competitionType.equals("SkiCompetition")) {
+                        competitorType = "Skier";
+                        compType = "Ski";
+                    } else {
+                        competitorType = "Snowboarder";
+                        compType = "Snowboard";
+                    }
+                    Class c;
+                    ClassLoader cl = ClassLoader.getSystemClassLoader();
+                    try {
+
+                        c = cl.loadClass("game.entities.sportsman." + competitorType);
+                        Constructor con = c.getConstructor(String.class, double.class, Gender.class, double.class, double.class, Discipline.class);
+                        competitor = (WinterSportsman) con.newInstance(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
+
+                        competition.addCompetitor(competitor);
+                        //print details of the competitor.
+                        System.out.println(competitor);
+                        String stringGender = ((WinterCompetition) competition).getGender().toString();
+                        if(stringGender.equals("MALE"))
+                            stringGender="Male";
+                        else
+                            stringGender="Female";
+                        ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet(compType + stringGender, competitor, ((ArenaPanel) arenaPanel)));
+                        revalidate();
+                        repaint();
+                        System.out.println(((ArenaPanel) arenaPanel).getCompetitors());
+                    }
+                    catch (IllegalThreadStateException ex)
+                    {
+                        JOptionPane.showMessageDialog(null, ex.getMessage());
+                    }
+                    catch(IllegalArgumentException invalidComp){
+                        System.out.println(invalidComp.getMessage());
+                        JOptionPane.showMessageDialog(null, invalidComp.getMessage());
+                    }
+                    catch (IllegalStateException maxComp){
+                        System.out.println(maxComp.getMessage());
+                        JOptionPane.showMessageDialog(null, maxComp.getMessage());
+                    }
+                     catch (InstantiationException ex) {
+                        ex.printStackTrace();
+                    } catch (InvocationTargetException ex) {
+                        ex.printStackTrace();
+                    } catch (NoSuchMethodException ex) {
+                        ex.printStackTrace();
+                    } catch (IllegalAccessException ex) {
+                        ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                    stage="start competition";
                 }
                 else
                 {
-                    competitorType="Snowboarder";
-                    compType = "Snowboard";
+                    if(competition!=null && competition.getActiveCompetitors().size()>0)
+                        JOptionPane.showMessageDialog(null, "The competition already started.");
+                    else
+                        JOptionPane.showMessageDialog(null, "Right now you need to "+stage);
                 }
-                Class c;
-                ClassLoader cl = ClassLoader.getSystemClassLoader();
-                try {
-
-                    c = cl.loadClass("game.entities.sportsman." + competitorType);
-                    Constructor con = c.getConstructor(String.class, double.class, Gender.class, double.class, double.class, Discipline.class);
-                    competitor = (WinterSportsman) con.newInstance(name, age, ((WinterCompetition) competition).getGender(), acceleration, maxSpeed, ((WinterCompetition) competition).getDiscipline());
-                    competition.addCompetitor(competitor);
-                    //print details of the competitor.
-                    System.out.println(competitor);
-                    String stringGender = ((SidePanel) sidePanel).getGender().getSelectedItem().toString();
-                    ((ArenaPanel) arenaPanel).getCompetitors().add(new DrawableObjcet( compType+stringGender,competitor,((ArenaPanel)arenaPanel)));
-                    revalidate();
-                    repaint();
-                    System.out.println( ((ArenaPanel) arenaPanel).getCompetitors());
-
-                } catch (InstantiationException ex) {
-                    ex.printStackTrace();
-                } catch (InvocationTargetException ex) {
-                    ex.printStackTrace();
-                } catch (NoSuchMethodException ex) {
-                    ex.printStackTrace();
-                } catch (IllegalAccessException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
-
             }
         });
         /**
@@ -270,22 +321,25 @@ public class MainScreen extends JFrame{
                 /**
                  * start comtetition.
                  */
-                Thread T =new Thread(((ArenaPanel)arenaPanel));
-                GameEngine.getInstance().setCompetition(competition);
-                try {
-                    T.start();
-                    isTAlive=true;
-                    new Thread(GameEngine.getInstance()).start();
-                }
-                catch (Exception e1)
-                {
-                    T.stop();
-                    isTAlive=false;
-                    e1.printStackTrace();
-                }
-                if(!T.isAlive())
-                {
-                    isTAlive=false;
+                if (stage.equals("start competition")) {
+                    Thread T = new Thread(((ArenaPanel) arenaPanel));
+                    GameEngine.getInstance().setCompetition(competition);
+                    try {
+                        T.start();
+                        isTAlive = true;
+                        new Thread(GameEngine.getInstance()).start();
+                    } catch (Exception e1) {
+                        T.stop();
+                        isTAlive = false;
+                        e1.printStackTrace();
+                    }
+                    if (!T.isAlive()) {
+                        isTAlive = false;
+                    }
+                    stage="build arena";
+                    //competitionCondition="started";
+                } else {
+                    JOptionPane.showMessageDialog(null, "Right now you need to " + stage);
                 }
             }
         });

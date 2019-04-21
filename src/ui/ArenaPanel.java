@@ -21,12 +21,13 @@ public class ArenaPanel extends JPanel implements Runnable {
 
     private BufferedImage image;
     private Vector<DrawableObjcet> competitors;
-    private int width;
+    private int width=1000;
     private int height;
     private Competition competition;
 
     public void setCompetition(Competition competition) {
         this.competition = competition;
+
     }
 
     public ArenaPanel(String arenaName) {
@@ -64,11 +65,12 @@ public class ArenaPanel extends JPanel implements Runnable {
     }
 
     public void  setImage(String arenaName, int length){
+
         if (length <700 || length >900){
             throw new ValueException("Invalid input values! Please try again");
         }
         height = length;
-        width = 1000;
+
         try{
             if (arenaName == "None"){
                 image = null;
@@ -93,5 +95,10 @@ public class ArenaPanel extends JPanel implements Runnable {
             }
         }
     }
-
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    public Competition getCompetition() {
+        return competition;
+    }
 }
