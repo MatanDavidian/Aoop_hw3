@@ -24,7 +24,7 @@ public class SidePanel extends JPanel {
     private JComboBox<String> discipline;
     private JComboBox<String> league;
     private JComboBox<String> gender;
-    private JButton createCompetition;
+     JButton createCompetition;
 
     /**
      * add competitor part
