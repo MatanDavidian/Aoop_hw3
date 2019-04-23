@@ -50,13 +50,10 @@ public class MobileEntity extends Entity implements IMobileEntity{
      */
     @Override
     public void move(double friction) {
+        //update the competitor speed.
         this.setSpeed(Math.min(this.maxSpeed,this.speed + this.getAcceleration()* (1-friction)));
-        Point newLocation = this.getLocation().offset(this.speed,0);
-        this.setLocation(newLocation);
-        //if the competitor cross the finish line he will be return to the finish line.
-        if(getLocation().getX()>((WinterArena)myArena).getLength()) {
-           setLocation(new Point(((WinterArena)myArena).getLength(),getLocation().getY()));
-        }
+        //update the competitor location, if the competitor cross the finish line he will be return to the finish line.
+        setLocation(new Point(getLocation().getX(), Math.min(((WinterArena) myArena).getLength(),this.getLocation().getY()+this.speed)));
     }
     //endregion
 

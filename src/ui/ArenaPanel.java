@@ -46,16 +46,13 @@ public class ArenaPanel extends JPanel implements Runnable {
         if(image != null) {
             g.drawImage(image, 0, 0, width, height, this);
             if (competitors.size()> 0) {
-
-                int distacne = 0;
-
+                int distance = 0;
                 for (DrawableObjcet comp : competitors) {
                     Entity dis =  ((Entity)comp.getCompetitor());
-                    dis.setLocation(new Point((int)dis.getLocation().getX(),distacne));
-                    distacne += comp.getSize() + 10;
+                    dis.setLocation(new Point(distance,(int)dis.getLocation().getY()));
+                    distance += comp.getSize() + 10;
                     comp.draw(g);
-            }
-
+                }
             }
         }
     }

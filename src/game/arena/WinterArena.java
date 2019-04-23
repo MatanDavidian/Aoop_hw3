@@ -41,7 +41,7 @@ public class WinterArena implements IArena {
     @Override
     public boolean isFinished(IMobileEntity mobileEntity) {
         ValidationUtils.assertNotNull(mobileEntity);
-        return mobileEntity.getLocation().getX() >= length;
+        return mobileEntity.getLocation().getY() >= length;
     }
 
     public double getLength() {

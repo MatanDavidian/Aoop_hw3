@@ -24,6 +24,7 @@ public abstract class Competition extends Thread implements Observer{
     private final Vector<Competitor> activeCompetitors;
     private final Vector<Competitor> finishedCompetitors;
     private final int maxCompetitors;
+
     /**
      * Ctor for an abstract competition
      *
@@ -75,12 +76,6 @@ public abstract class Competition extends Thread implements Observer{
             }
         }
     }
-    @Override
-    public void update(Observable o, Object arg) {
-        finishedCompetitors.add((Competitor) o);
-        activeCompetitors.remove(o);
-
-    }
     /**
      * Get competitors who have finished (used later so we could print them)
      *
@@ -102,4 +97,12 @@ public abstract class Competition extends Thread implements Observer{
         return maxCompetitors;
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        finishedCompetitors.add((Competitor) o);
+        int index=activeCompetitors.indexOf(o);
+        activeCompetitors.set(index,activeCompetitors.lastElement());
+        activeCompetitors.remove(activeCompetitors.size()-1);
+
+    }
 }

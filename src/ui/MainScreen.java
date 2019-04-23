@@ -382,7 +382,8 @@ public class MainScreen extends JFrame{
                             dataOfCompetitor.add(((Sportsman)competitor).getSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getMaxSpeed()+"");
                             dataOfCompetitor.add(((Sportsman)competitor).getLocation()+"");
-                            dataOfCompetitor.add("NO");                            data.add(dataOfCompetitor);
+                            dataOfCompetitor.add("NO");
+                            data.add(dataOfCompetitor);
                         }
                         catch (Exception ex){
                             ex.printStackTrace();

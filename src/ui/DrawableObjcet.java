@@ -1,15 +1,12 @@
 package ui;
 
-import game.competition.Competitor;
 import game.entities.Entity;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import utilities.Point;
 
 public class DrawableObjcet{
 
@@ -31,7 +28,7 @@ public class DrawableObjcet{
     }
 
     public void draw(Graphics g){
-        g.drawImage(image , (int)competitor.getLocation().getY(),(int)competitor.getLocation().getX() , size ,size , myArena);
+        g.drawImage(image , (int)competitor.getLocation().getX(),(int)competitor.getLocation().getY() , size ,size , myArena);
     }
 
     public Entity getCompetitor() {
