@@ -9,21 +9,21 @@ import utilities.ValidationUtils;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
+
 /**
  * Created by itzhak on 24-Mar-19.
  */
-public abstract class Competition extends Thread implements Observer, Runnable {
+public abstract class Competition extends Thread implements Observer{
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
      * If in future tasks you will need to change them you could remove the final modifier and add a setter.
      */
-    Observer O;
     private IArena arena;
-    private final ArrayList<Competitor> activeCompetitors;
-    private final ArrayList<Competitor> finishedCompetitors;
+    private final Vector<Competitor> activeCompetitors;
+    private final Vector<Competitor> finishedCompetitors;
     private final int maxCompetitors;
-
     /**
      * Ctor for an abstract competition
      *
@@ -32,11 +32,10 @@ public abstract class Competition extends Thread implements Observer, Runnable {
      */
     public Competition(IArena arena, int maxCompetitors) {
         this.maxCompetitors = maxCompetitors;
-        this.activeCompetitors = new ArrayList<>();
-        this.finishedCompetitors = new ArrayList<>();
+        this.activeCompetitors = new Vector<>();
+        this.finishedCompetitors = new Vector<>();
         this.arena = arena;
     }
-
     /**
      * Validate if a competitor can compete
      *
@@ -63,7 +62,8 @@ public abstract class Competition extends Thread implements Observer, Runnable {
         }
     }
     /**
-     * Play a single turn of the game
+     *  Start the race
+     ** This method will run the threads of all players.
      */
     public void startCompetition() {
         ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
@@ -72,65 +72,34 @@ public abstract class Competition extends Thread implements Observer, Runnable {
             if (!arena.isFinished(competitor)) {
                 ((MobileEntity)competitor).setMyArena(arena);
                 new Thread((MobileEntity)competitor).start();
-                //competitor.move(arena.getFriction());
-                if(competitor.getLocation().getX()>((WinterArena)arena).getLength()) {
-                    ((MobileEntity) competitor).setLocation(new Point(((WinterArena)arena).getLength(),competitor.getLocation().getY()));
-                }
-
-                if (arena.isFinished(competitor)) {
-                    finishedCompetitors.add(competitor);
-                    activeCompetitors.remove(competitor);
-                }
             }
         }
     }
-
-    /**
-     * check if competition has active competitors
-     *
-     * @return true if there are active competitors else false.
-     */
-    public boolean hasActiveCompetitors() {
-        return activeCompetitors.size() > 0;
-    }
-
-    /**
-     * Get competitors who have finished (used later so we could print them)
-     *
-     * @return all finished competitors.
-     */
-    public ArrayList<Competitor> getFinishedCompetitors() {
-        return new ArrayList<>(finishedCompetitors);
-    }
-    public void notify(String msg)
-    {
-
-    }
-
-    public IArena getArena() {
-        return arena;
-    }
-
-    public void setArena(IArena arena) {
-        this.arena = arena;
-    }
-
-    public ArrayList<Competitor> getActiveCompetitors() {
-        return activeCompetitors;
-    }
-
-    public int getMaxCompetitors() {
-        return maxCompetitors;
-    }
-    public void run()
-    {
-        startCompetition();
-    }
-
     @Override
     public void update(Observable o, Object arg) {
         finishedCompetitors.add((Competitor) o);
         activeCompetitors.remove(o);
 
     }
+    /**
+     * Get competitors who have finished (used later so we could print them)
+     *
+     * @return all finished competitors.
+     */
+    public Vector<Competitor> getFinishedCompetitors() {
+        return new Vector<>(finishedCompetitors);
+    }
+    public IArena getArena() {
+        return arena;
+    }
+    public void setArena(IArena arena) {
+        this.arena = arena;
+    }
+    public Vector<Competitor> getActiveCompetitors() {
+        return activeCompetitors;
+    }
+    public int getMaxCompetitors() {
+        return maxCompetitors;
+    }
+
 }

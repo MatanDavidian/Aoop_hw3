@@ -33,8 +33,7 @@ public class MainScreen extends JFrame{
     private static String stage="build arena";
     //private static String competitionCondition="not Started";
     private static String cType;
-    public MainScreen() throws Exception {
-        setSize(widthSize,heightSize);
+    public MainScreen() throws Exception { setSize(widthSize,heightSize);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
@@ -327,7 +326,7 @@ public class MainScreen extends JFrame{
                     try {
                         T.start();
                         isTAlive = true;
-                        new Thread(GameEngine.getInstance()).start();
+                        GameEngine.getInstance().startRace(competition);
                     } catch (Exception e1) {
                         T.stop();
                         isTAlive = false;

@@ -7,7 +7,7 @@ import utilities.ValidationUtils;
 
 import static java.lang.Thread.sleep;
 
-public class GameEngine implements Runnable {
+public class GameEngine{
 
     private static GameEngine instance;
     private Competition competition;
@@ -32,25 +32,13 @@ public class GameEngine implements Runnable {
 
     /**
      * Start a race at a competition
-     * This method will play competition turns until finished then print the results.
+     * This method will play competition turns until finished.
      *
      * @param competition The competition to be run
      */
     public void startRace(Competition competition) {
         ValidationUtils.assertNotNull(competition);
-        int step=0;
         competition.startCompetition();
-        //here was loop that call to play turn at competition to make a step
-        /**
-        for (step = 0; competition.hasActiveCompetitors(); step++) {
-            competition.playTurn();
-            try{
-                sleep(30);
-            }
-            catch (Exception e) {}
-        }
-         **/
-        System.out.println("race finished in " + step + " steps");
         printResults(competition);
     }
 
@@ -74,10 +62,4 @@ public class GameEngine implements Runnable {
         this.competition = competition;
     }
 
-    @Override
-    public void run() {
-        if (competition != null){
-            startRace(competition);
-        }
-    }
 }
