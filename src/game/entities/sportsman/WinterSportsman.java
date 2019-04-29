@@ -37,7 +37,7 @@ public class WinterSportsman extends Sportsman implements Competitor {
 
     @Override
     public void initRace() {
-        this.setLocation(new Point(0, this.getLocation().getY()));
+        this.setLocation(new Point(this.getLocation().getX(), 0));
     }
 
     @Override

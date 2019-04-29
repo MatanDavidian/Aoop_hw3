@@ -14,11 +14,7 @@ public class MobileEntity extends Entity implements IMobileEntity{
     private final double maxSpeed;
     private final double acceleration;
     private double speed;
-    private double friction = -1;
     private IArena myArena;
-    public void setFriction(double friction) {
-        this.friction = friction;
-    }
     /**
      * Ctor for a mobile entity in the game
      * @param initialSpeed initial speed of the entity
@@ -30,25 +26,41 @@ public class MobileEntity extends Entity implements IMobileEntity{
         this.acceleration = acceleration;
         this.maxSpeed = maxSpeed;
     }
+    /**
+     * make competitors move until they cross the finish line.
+     * and sleep for 100 ms between turns.
+     */
+    @Override
+    public void run() {
 
+        while (!myArena.isFinished(this)/**!isFinished((int)((WinterArena)myArena).getLength())**/) {
+            move(myArena.getFriction());
+            try {
+                sleep(100);
+            } catch (Exception e) { }
+        }
+        System.out.println(this.countObservers());
+        setChanged();
+        notifyObservers("Finished");
+    }
     //region IMobileEntity Implementation
 
     /**
      * @see IMobileEntity#move(double)
      */
     @Override
-    public synchronized void move(double friction) {
+    public void move(double friction) {
+        //update the competitor speed.
         this.setSpeed(Math.min(this.maxSpeed,this.speed + this.getAcceleration()* (1-friction)));
-        Point newLocation = this.getLocation().offset(this.speed,0);
-        this.setLocation(newLocation);
-        if(getLocation().getX()>((WinterArena)myArena).getLength()) {
-           setLocation(new Point(((WinterArena)myArena).getLength(),getLocation().getY()));
-        }
+        //update the competitor location, if the competitor cross the finish line he will be return to the finish line.
+        setLocation(new Point(getLocation().getX(), Math.min(((WinterArena) myArena).getLength(),this.getLocation().getY()+this.speed)));
     }
     //endregion
 
     //region Setters
-
+    public void setMyArena(IArena myArena) {
+        this.myArena = myArena;
+    }
     /**
      * Note: speed can theoretically be negative
      * @param speed the current speed of the entity
@@ -59,6 +71,12 @@ public class MobileEntity extends Entity implements IMobileEntity{
     //endregion
 
     //region Getters
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+    public double getSpeed() {
+        return speed;
+    }
 
     /**
      * @return the acceleration of the entity
@@ -67,43 +85,5 @@ public class MobileEntity extends Entity implements IMobileEntity{
         return acceleration;
     }
     //endregion
-    /**
-     * in order to "strat()" u need
-     */
-    @Override
-    public void run() {
-        if(friction!=-1) {
-            while (!isFinished((int)((WinterArena)myArena).getLength())) {
-                move(friction);
-                try {
-                    sleep(100);
-                } catch (Exception e) {
 
-                }
-            }
-            System.out.println(this.countObservers());
-            setChanged();
-            notifyObservers("Finished");
-        }
-        else{
-            throw new ValueException("friction value is -1 , try to upddate friction");
-        }
-    }
-
-
-    public boolean isFinished(int len)
-    {
-        return this.getLocation().getX()>=len;
-    }
-    public double getMaxSpeed() {
-        return maxSpeed;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-    public void setMyArena(IArena myArena) {
-        this.myArena = myArena;
-        this.friction = myArena.getFriction();
-    }
 }
