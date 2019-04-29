@@ -5,9 +5,12 @@ import game.competition.Competition;
 import game.competition.Competitor;
 import utilities.ValidationUtils;
 
-public class GameEngine {
+import static java.lang.Thread.sleep;
+
+public class GameEngine implements Runnable {
 
     private static GameEngine instance;
+    private Competition competition;
 
     /**
      * .
@@ -35,10 +38,18 @@ public class GameEngine {
      */
     public void startRace(Competition competition) {
         ValidationUtils.assertNotNull(competition);
-        int step;
+        int step=0;
+        competition.startCompetition();
+        //here was loop that call to play turn at competition to make a step
+        /**
         for (step = 0; competition.hasActiveCompetitors(); step++) {
             competition.playTurn();
+            try{
+                sleep(30);
+            }
+            catch (Exception e) {}
         }
+         **/
         System.out.println("race finished in " + step + " steps");
         printResults(competition);
     }
@@ -55,4 +66,18 @@ public class GameEngine {
         }
     }
 
+    public Competition getCompetition() {
+        return competition;
+    }
+
+    public void setCompetition(Competition competition) {
+        this.competition = competition;
+    }
+
+    @Override
+    public void run() {
+        if (competition != null){
+            startRace(competition);
+        }
+    }
 }

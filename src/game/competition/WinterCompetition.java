@@ -12,6 +12,8 @@ import java.util.Observable;
  * Created by itzhak on 24-Mar-19.
  */
 public class WinterCompetition extends Competition {
+
+
     /**
      * Important note:
      * Those fields (and more in this project) are currently final due to them not changing in HW2.
@@ -36,7 +38,12 @@ public class WinterCompetition extends Competition {
         this.league = league;
         this.gender = gender;
     }
-
+    public WinterCompetition(WinterCompetition other) {
+        super(other.getArena(), other.getMaxCompetitors());
+        this.discipline = other.discipline;
+        this.league = other.league;
+        this.gender = other.gender;
+    }
     @Override
     protected boolean isValidCompetitor(Competitor competitor) {
         if (competitor instanceof WinterSportsman) {
@@ -47,9 +54,11 @@ public class WinterCompetition extends Competition {
         }
         return false;
     }
-    @Override
-    public void update(Observable o, Object arg) {
 
+    public Discipline getDiscipline() {
+        return discipline;
     }
-
+    public Gender getGender() {
+        return gender;
+    }
 }

@@ -1,6 +1,7 @@
 package game.arena;
 
 import game.entities.IMobileEntity;
+import game.entities.MobileEntity;
 import game.enums.WeatherCondition;
 import game.enums.SnowSurface;
 import utilities.ValidationUtils;
@@ -40,7 +41,7 @@ public class WinterArena implements IArena {
     @Override
     public boolean isFinished(IMobileEntity mobileEntity) {
         ValidationUtils.assertNotNull(mobileEntity);
-        return mobileEntity.getLocation().getX() >= length;
+        return ((MobileEntity)mobileEntity).isFinished((int)length);
     }
 
     public double getLength() {
