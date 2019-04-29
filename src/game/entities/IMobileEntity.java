@@ -3,7 +3,7 @@ package game.entities;
 import utilities.Point;
 
 /**
- * Created by itzhak on 23-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public interface IMobileEntity {
     /**

@@ -8,7 +8,7 @@ import utilities.Point;
 import static java.lang.Thread.sleep;
 
 /**
- * Created by itzhak on 07-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class MobileEntity extends Entity implements IMobileEntity{
     private final double maxSpeed;

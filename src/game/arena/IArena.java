@@ -3,7 +3,7 @@ package game.arena;
 import game.entities.IMobileEntity;
 
 /**
- * Created by itzhak on 25-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public interface IArena {
     /**

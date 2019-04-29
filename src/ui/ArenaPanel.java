@@ -1,9 +1,7 @@
 package ui;
 
 import game.competition.Competition;
-import game.competition.WinterCompetition;
 import game.entities.Entity;
-import game.entities.sportsman.WinterSportsman;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import utilities.Point;
 
@@ -17,6 +15,9 @@ import java.util.Vector;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * Created by Matan & Tom on 15-Apr-19.
+ */
 public class ArenaPanel extends JPanel implements Runnable {
 
     private BufferedImage image;
@@ -24,11 +25,6 @@ public class ArenaPanel extends JPanel implements Runnable {
     private int width=1000;
     private int height;
     private Competition competition;
-
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
-
-    }
 
     public ArenaPanel(String arenaName) {
         competitors = new Vector<>();
@@ -40,6 +36,22 @@ public class ArenaPanel extends JPanel implements Runnable {
         return competitors;
     }
 
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    @Override
+    public void run() {
+        while(competition.getActiveCompetitors().size()>0) {
+            this.repaint();
+            this.revalidate();
+            try {
+                sleep(30);
+            } catch (Exception e) {
+
+            }
+        }
+    }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -56,11 +68,13 @@ public class ArenaPanel extends JPanel implements Runnable {
             }
         }
     }
-
-    public BufferedImage getImage() {
-        return image;
+    public void setWidth(int width) {
+        this.width = width;
     }
-
+    public Competition getCompetition() {
+        return competition;
+    }
+    public void setCompetition(Competition competition) { this.competition = competition; }
     public void  setImage(String arenaName, int length){
 
         if (length <700 || length >900){
@@ -74,28 +88,10 @@ public class ArenaPanel extends JPanel implements Runnable {
             }
             else {
                 image = ImageIO.read(new File(arenaName));
-        }
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    }
-
-    @Override
-    public void run() {
-        while(competition.getActiveCompetitors().size()>0) {
-            this.repaint();
-            this.revalidate();
-            try {
-                sleep(30);
-            } catch (Exception e) {
-
             }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-    public void setWidth(int width) {
-        this.width = width;
-    }
-    public Competition getCompetition() {
-        return competition;
-    }
+
 }

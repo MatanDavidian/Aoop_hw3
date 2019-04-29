@@ -9,7 +9,7 @@ import utilities.Point;
 import utilities.ValidationUtils;
 
 /**
- * Created by itzhak on 24-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class WinterSportsman extends Sportsman implements Competitor {
     /**

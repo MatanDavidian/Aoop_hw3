@@ -1,10 +1,7 @@
 package game.competition;
 
 import game.arena.IArena;
-import game.arena.WinterArena;
 import game.entities.MobileEntity;
-import game.entities.sportsman.Skier;
-import utilities.Point;
 import utilities.ValidationUtils;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -12,12 +9,12 @@ import java.util.Observer;
 import java.util.Vector;
 
 /**
- * Created by itzhak on 24-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public abstract class Competition extends Thread implements Observer{
     /**
      * Important note:
-     * Those fields (and more in this project) are currently final due to them not changing in HW2.
+     * Those fields (and more in this project) are currently final due to them not changing in HW3.
      * If in future tasks you will need to change them you could remove the final modifier and add a setter.
      */
     private IArena arena;
@@ -77,8 +74,21 @@ public abstract class Competition extends Thread implements Observer{
         }
     }
     /**
+     *  @see Observer update methood
+     * add the competitior to finishedCompetitors.
+     * remove the competitior from activeCompetitors(Realization with lower running time than vector.remove(Object) ).
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        finishedCompetitors.add((Competitor) o);
+        int index=activeCompetitors.indexOf(o);
+        activeCompetitors.set(index,activeCompetitors.lastElement());
+        activeCompetitors.remove(activeCompetitors.size()-1);
+
+    }
+    //region Getters & setters
+    /**
      * Get competitors who have finished (used later so we could print them)
-     *
      * @return all finished competitors.
      */
     public Vector<Competitor> getFinishedCompetitors() {
@@ -96,13 +106,6 @@ public abstract class Competition extends Thread implements Observer{
     public int getMaxCompetitors() {
         return maxCompetitors;
     }
+    //end region
 
-    @Override
-    public void update(Observable o, Object arg) {
-        finishedCompetitors.add((Competitor) o);
-        int index=activeCompetitors.indexOf(o);
-        activeCompetitors.set(index,activeCompetitors.lastElement());
-        activeCompetitors.remove(activeCompetitors.size()-1);
-
-    }
 }

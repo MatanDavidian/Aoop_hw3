@@ -9,7 +9,7 @@ import game.enums.League;
 import java.util.Observable;
 
 /**
- * Created by itzhak on 24-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class WinterCompetition extends Competition {
 
@@ -38,6 +38,11 @@ public class WinterCompetition extends Competition {
         this.league = league;
         this.gender = gender;
     }
+    /**
+     * Copy ctor for the competition
+     *
+     * @param other  WinterCompetition for copy to the new one.
+     */
     public WinterCompetition(WinterCompetition other) {
         super(other.getArena(), other.getMaxCompetitors());
         this.discipline = other.discipline;
@@ -54,11 +59,12 @@ public class WinterCompetition extends Competition {
         }
         return false;
     }
-
+    //region Getters & setters
     public Discipline getDiscipline() {
         return discipline;
     }
     public Gender getGender() {
         return gender;
     }
+    //end region
 }

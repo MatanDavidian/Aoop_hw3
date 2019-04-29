@@ -7,7 +7,7 @@ import game.enums.Gender;
 import game.enums.League;
 
 /**
- * Created by itzhak on 25-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class SkiCompetition extends WinterCompetition {
     /**

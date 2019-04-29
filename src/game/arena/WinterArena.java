@@ -7,12 +7,12 @@ import game.enums.SnowSurface;
 import utilities.ValidationUtils;
 
 /**
- * Created by itzhak on 07-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class WinterArena implements IArena {
     /**
      * Important note:
-     * Those fields (and more in this project) are currently final due to them not changing in HW2.
+     * Those fields (and more in this project) are currently final due to them not changing in HW3.
      * If in future tasks you will need to change them you could remove the final modifier and add a setter.
      */
     private final double length;
@@ -32,24 +32,38 @@ public class WinterArena implements IArena {
         this.surface = surface;
         this.condition = condition;
     }
-
-    @Override
-    public double getFriction() {
-        return surface.getFriction();
-    }
-
-    @Override
-    public boolean isFinished(IMobileEntity mobileEntity) {
-        ValidationUtils.assertNotNull(mobileEntity);
-        return mobileEntity.getLocation().getY() >= length;
-    }
-
-    public double getLength() {
-        return length;
-    }
+    /**
+     * @return string s that represent the arena.
+     * @see Object toString
+     */
     @Override
     public String toString() {
         String s= "length: " + length +"\nsurface: " + surface + "\ncondition: " + condition;
         return s;
     }
+    /**
+     * @param mobileEntity a mobileEntity to check if crossed the finished line.
+     * @return represent of the arena.
+     */
+    @Override
+    public boolean isFinished(IMobileEntity mobileEntity) {
+        ValidationUtils.assertNotNull(mobileEntity);
+        return mobileEntity.getLocation().getY() >= length;
+    }
+    //region Getters & setters
+    /**
+     * @return arena's friction
+     */
+    @Override
+    public double getFriction() {
+        return surface.getFriction();
+    }
+    /**
+     * @return arena's length
+     */
+    public double getLength() {
+        return length;
+    }
+    //end region
+
 }

@@ -4,7 +4,7 @@ import utilities.Point;
 import utilities.ValidationUtils;
 import java.util.Observable;
 /**
- * Created by itzhak on 24-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public abstract class Entity extends Observable implements Runnable {
     private Point location;

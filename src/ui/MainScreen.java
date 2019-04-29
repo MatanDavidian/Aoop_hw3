@@ -2,15 +2,10 @@ package ui;
 import game.GameEngine;
 import game.arena.WinterArena;
 import game.competition.*;
-import game.entities.MobileEntity;
-import game.entities.sportsman.Skier;
-import game.entities.sportsman.Snowboarder;
 import game.entities.sportsman.Sportsman;
 import game.entities.sportsman.WinterSportsman;
 import game.enums.*;
 import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
-import sun.awt.SunHints;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

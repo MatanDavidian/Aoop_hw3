@@ -7,14 +7,15 @@ import utilities.ValidationUtils;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * Created by Matan & Tom on 15-Apr-19.
+ */
 public class GameEngine{
 
     private static GameEngine instance;
     private Competition competition;
-
     /**
-     * .
-     *
+
      * @return singleton instance of the game engine
      */
     public static GameEngine getInstance() {
@@ -32,28 +33,18 @@ public class GameEngine{
 
     /**
      * Start a race at a competition
-     * This method will play competition turns until finished.
-     *
+     * This method will call to startCompetition method of competition obj to run all the threads of the competitors if they valid
      * @param competition The competition to be run
      */
     public void startRace(Competition competition) {
         ValidationUtils.assertNotNull(competition);
         competition.startCompetition();
-        printResults(competition);
     }
+    //region Getters & setters
 
     /**
-     * print the game results
+     * @return competition
      */
-    private void printResults(Competition competition) {
-        System.out.println("Race results:");
-        int place = 1;
-        for (Competitor skier : competition.getFinishedCompetitors()) {
-            System.out.println(place + ". " + skier);
-            place++;
-        }
-    }
-
     public Competition getCompetition() {
         return competition;
     }
@@ -61,5 +52,5 @@ public class GameEngine{
     public void setCompetition(Competition competition) {
         this.competition = competition;
     }
-
+    //end region
 }

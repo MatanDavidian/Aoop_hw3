@@ -1,5 +1,7 @@
 package utilities;
-
+/**
+ * Created by itzhak on 15-Mar-19.
+ **/
 public class Point {
 
     public static final int MAX_X = 1000000;

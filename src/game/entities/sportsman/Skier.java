@@ -4,7 +4,7 @@ import game.enums.Discipline;
 import game.enums.Gender;
 
 /**
- * Created by itzhak on 25-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class Skier extends WinterSportsman {
     /**

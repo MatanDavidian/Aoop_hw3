@@ -5,7 +5,7 @@ import game.enums.Gender;
 import utilities.ValidationUtils;
 
 /**
- * Created by itzhak on 24-Mar-19.
+ * Created by Matan & Tom on 15-Apr-19.
  */
 public class Sportsman extends MobileEntity {
     /**
