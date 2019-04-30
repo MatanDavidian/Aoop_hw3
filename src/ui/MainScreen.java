@@ -17,18 +17,24 @@ import java.util.Vector;
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
-    //private ArenaPanel arenaPanel= new ArenaPanel("None");
-    //private SidePanel sidePanel;
     private String compType;
     private String gender;
-    //private static int distance = 0;
     private int widthSize=1175;
     private int heightSize=700;
     private static boolean isTAlive=false;
     private static String stage="build arena";
-    //private static String competitionCondition="not Started";
     private static String cType;
-    public MainScreen() throws Exception { setSize(widthSize,heightSize);
+    /**
+     *Ctor
+     * set the size of the windows
+     * contain two panels, the arena panel and the size panel
+     * listen to action that make on the side panel and execute the action on arena panel.
+     * @see ArenaPanel
+     * @see SidePanel
+     */
+    public MainScreen()
+    {
+        setSize(widthSize,heightSize);
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
@@ -86,8 +92,9 @@ public class MainScreen extends JFrame{
                         arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
                         heightSize=arenaLength + 80;
                         setSize(1175,heightSize);
+
                         //print details of the arena.
-                        System.out.println(arena);
+                       //System.out.println(arena);
 
                         //painting the canvas.
                         ((ArenaPanel) arenaPanel).setCompetition(null);
@@ -112,7 +119,7 @@ public class MainScreen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 /**
-                 * setting the Competition.
+                 * setting the Competition id necessary .
                  */
                 if(((ArenaPanel) arenaPanel).getCompetition()!=null || stage.equals("create competition")) {
                     String competitionType = ((SidePanel) sidePanel).getChooseCompetition().getSelectedItem().toString() + "Competition";
@@ -191,7 +198,7 @@ public class MainScreen extends JFrame{
                     revalidate();
                     repaint();
                     //print details of the arena.
-                    System.out.println(competition);
+                    //System.out.println(competition);
                     stage="add competitors";
                 }
                 else
@@ -393,8 +400,6 @@ public class MainScreen extends JFrame{
                     frame.add(scrollPane);
                     frame.pack();
                     frame.setVisible(true);
-
-
                 }
 
 

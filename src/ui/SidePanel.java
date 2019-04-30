@@ -43,7 +43,10 @@ public class SidePanel extends JPanel {
     private JButton startCompetition;
     private JButton showInfo;
 
-
+    /**
+     * default Ctor
+     * create initialize and locate all the labels, buttons and txt box on the side panel
+     */
     public SidePanel() {
         this.addCompetitorPanel = new JPanel();
         this.addCompetitorPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -99,45 +102,6 @@ public class SidePanel extends JPanel {
         this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
         this.startAndInfoPanel.setLayout(new GridLayout(2 , 1));
 
-/*
-        this.buildArenaPanel.add(new JLabel("Build Arena"));
-        this.buildArenaPanel.add(new JLabel("Arena Length"));
-        this.buildArenaPanel.add(this.arenaLenght);
-        this.buildArenaPanel.add(new JLabel("Snow Surface"));
-        this.buildArenaPanel.add(this.snowSurface);
-        this.buildArenaPanel.add(new JLabel("Weather Condition"));
-        this.buildArenaPanel.add(this.weatherCondition);
-        this.buildArenaPanel.add(this.buildArena);
-
-        this.createCompetitionPanel.add(new JLabel("Choose Competition"));
-        this.createCompetitionPanel.add(this.chooseCompetition);
-        this.createCompetitionPanel.add(new JLabel("Max competitors number"));
-        this.createCompetitionPanel.add(this.maxCompetitorsNumber);
-        this.createCompetitionPanel.add(new JLabel("Discipline"));
-        this.createCompetitionPanel.add(this.discipline);
-        this.createCompetitionPanel.add(new JLabel("League"));
-        this.createCompetitionPanel.add(this.league);
-        this.createCompetitionPanel.add(new JLabel("Gender"));
-        this.createCompetitionPanel.add(this.gender);
-        this.createCompetitionPanel.add(this.createCompetition);
-
-        this.addCompetitorPanel.add(new JLabel("Add competitor"));
-        this.addCompetitorPanel.add(new JLabel("name"));
-        this.addCompetitorPanel.add(this.name);
-        this.addCompetitorPanel.add(new JLabel("Age"));
-        this.addCompetitorPanel.add(this.age);
-        this.addCompetitorPanel.add(new JLabel("Max speed"));
-        this.addCompetitorPanel.add(this.maxSpeed);
-        this.addCompetitorPanel.add(new JLabel("Acceleration"));
-        this.addCompetitorPanel.add(this.acceleration);
-        this.addCompetitorPanel.add(this.addCompetitor);
-
-        this.startAndInfoPanel.add(this.startCompetition);
-        this.startAndInfoPanel.add(this.showInfo);
-
-        this.setVisible(true);
-        */
-
         JSeparator js = new JSeparator();
         js.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
 
@@ -192,13 +156,7 @@ public class SidePanel extends JPanel {
 
 
         this.setVisible(true);
-
-
-
-
     }
-
-
 
     public JPanel getBuildArenaPanel() {
         return buildArenaPanel;
