@@ -77,10 +77,6 @@ public class ArenaPanel extends JPanel implements Runnable {
     }
     public void setCompetition(Competition competition) { this.competition = competition; }
     public void  setImage(String arenaName, int length){
-
-        if (length <700 || length >900){
-            throw new ValueException("Invalid input values! Please try again");
-        }
         height = length;
 
         try{

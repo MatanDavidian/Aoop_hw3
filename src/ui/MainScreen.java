@@ -55,6 +55,7 @@ public class MainScreen extends JFrame{
                 /**
                  * setting the arena.
                  */
+                boolean RightArenaLen=true;
                 if(stage.equals("build arena") || stage.equals("create competition"))
                 {
                     String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
@@ -63,45 +64,38 @@ public class MainScreen extends JFrame{
                     String arenaWeatherCondition = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString().toUpperCase();
                     int arenaLength = 0;
                     /**
-                     * if arenaLengthString is not int , the value of arenaLength will be zero.
+                     * if arenaLengthString is not int , the value of arenaLength will be 700.
                      */
                     try {
                         arenaLength = Integer.parseInt(arenaLengthString);
+                        if(arenaLength<700 || arenaLength>900) {
+                            JOptionPane.showMessageDialog(null, "You must input int between 700-900");
+                            RightArenaLen=false;
+                        }
                     }
                     catch (NumberFormatException ex){
-                        arenaLength = 700;
-                        try {
-                            throw new ValueException("You must input int between 700-900");
+                        JOptionPane.showMessageDialog(null, "You must input int between 700-900");
+                        RightArenaLen=false;
+                    }
+                    //set image according to name and length.
+                    if(RightArenaLen==true) {
+                        ((ArenaPanel) arenaPanel).setImage(arenaName, arenaLength);
+                        if (competition == null || competition.getActiveCompetitors().size() == 0) {
+                            // adding the arena details to competition
+                            arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
+                            heightSize = arenaLength + 80;
+                            setSize(1175, heightSize);
+
+                            //print details of the arena.
+                            //System.out.println(arena);
+
+                            //painting the canvas.
+                            ((ArenaPanel) arenaPanel).setCompetition(null);
+                            ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                            revalidate();
+                            repaint();
+                            stage = "create competition";
                         }
-                        catch (ValueException ex1){
-                            JOptionPane.showMessageDialog(null, ex1.getMessage());
-                        }
-                    }
-                    try {
-                        //set image according to name and length.
-                        ((ArenaPanel) arenaPanel).setImage(arenaName , arenaLength);
-                    }
-
-                    catch (ValueException ex){
-
-                        JOptionPane.showMessageDialog(null, ex.getMessage());
-                    }
-
-                    if(competition==null || competition.getActiveCompetitors().size()==0) {
-                        // adding the arena details to competition
-                        arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
-                        heightSize=arenaLength + 80;
-                        setSize(1175,heightSize);
-
-                        //print details of the arena.
-                       //System.out.println(arena);
-
-                        //painting the canvas.
-                        ((ArenaPanel) arenaPanel).setCompetition(null);
-                        ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
-                        revalidate();
-                        repaint();
-                        stage = "create competition";
                     }
                 }
                 else {
