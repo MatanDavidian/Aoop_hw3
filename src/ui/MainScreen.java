@@ -17,27 +17,33 @@ import java.util.Vector;
 public class MainScreen extends JFrame{
     private Competition competition;
     private WinterArena arena;
-    //private ArenaPanel arenaPanel= new ArenaPanel("None");
-    //private SidePanel sidePanel;
     private String compType;
     private String gender;
-    //private static int distance = 0;
-    private int widthSize=1175;
+    private int widthSize=1176;
     private int heightSize=700;
     private static boolean isTAlive=false;
     private static String stage="build arena";
-    //private static String competitionCondition="not Started";
     private static String cType;
-    public MainScreen() throws Exception { setSize(widthSize,heightSize);
+    public MainScreen(){
+        setSize(widthSize,heightSize);
+        JSeparator js = new JSeparator(JSeparator.VERTICAL);
+        js.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
+
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
+        arenaPanel.setSize(1000,700);
+        /*
+        arenaPanel.setBorder(BorderFactory.createEmptyBorder(
+                2, //top
+                0,     //left
+                2, //bottom
+                0));
+        */
         JPanel sidePanel = new SidePanel();
-
-        this.add(arenaPanel, BorderLayout.CENTER);
-        this.add(sidePanel, BorderLayout.EAST);
-
+        this.add(arenaPanel, BorderLayout.LINE_START);
+        this.add(js, BorderLayout.WEST);
+        this.add(sidePanel, BorderLayout.AFTER_LINE_ENDS);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         /**
          * **************************************
          * buildArena Button -  action listener *
