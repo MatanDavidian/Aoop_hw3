@@ -39,7 +39,6 @@ public class MobileEntity extends Entity implements IMobileEntity{
                 sleep(100);
             } catch (Exception e) { }
         }
-        System.out.println(this.countObservers());
         setChanged();
         notifyObservers("Finished");
     }

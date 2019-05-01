@@ -43,7 +43,10 @@ public class SidePanel extends JPanel {
     private JButton startCompetition;
     private JButton showInfo;
 
-
+    /**
+     * default Ctor
+     * create initialize and locate all the labels, buttons and txt box on the side panel
+     */
     public SidePanel() {
         this.addCompetitorPanel = new JPanel();
         this.addCompetitorPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -99,7 +102,6 @@ public class SidePanel extends JPanel {
         this.addCompetitorPanel.setLayout(new GridLayout(10 , 1));
         this.startAndInfoPanel.setLayout(new GridLayout(2 , 1));
 
-
         JSeparator js = new JSeparator();
         js.setBorder(BorderFactory.createEmptyBorder(100,0,100,0));
 
@@ -115,6 +117,8 @@ public class SidePanel extends JPanel {
         this.add(this.buildArena);
         this.add(new JLabel(""));
         this.add(new JSeparator());
+
+
 
         this.add(new JLabel("<HTML><U><font color=blue><b>Choose Competition</b></font></U></HTML>"));
         this.add(this.chooseCompetition);
@@ -152,38 +156,86 @@ public class SidePanel extends JPanel {
 
 
         this.setVisible(true);
+    }
 
+    public JPanel getBuildArenaPanel() {
+        return buildArenaPanel;
+    }
 
-
-
+    public void setBuildArenaPanel(JPanel buildArenaPanel) {
+        this.buildArenaPanel = buildArenaPanel;
     }
 
     public JTextField getArenaLenght() {
         return arenaLenght;
     }
 
+    public void setArenaLenght(JTextField arenaLenght) {
+        this.arenaLenght = arenaLenght;
+    }
+
     public JComboBox<String> getSnowSurface() {
         return snowSurface;
     }
 
+    public void setSnowSurface(JComboBox<String> snowSurface) {
+        this.snowSurface = snowSurface;
+    }
 
     public JComboBox<String> getWeatherCondition() {
         return weatherCondition;
     }
 
+    public void setWeatherCondition(JComboBox<String> weatherCondition) {
+        this.weatherCondition = weatherCondition;
+    }
+
+    public JButton getBuildArena() {
+        return buildArena;
+    }
+
+    public void setBuildArena(JButton buildArena) {
+        this.buildArena = buildArena;
+    }
+
+    public JPanel getCreateCompetitionPanel() {
+        return createCompetitionPanel;
+    }
+
+    public void setCreateCompetitionPanel(JPanel createCompetitionPanel) {
+        this.createCompetitionPanel = createCompetitionPanel;
+    }
+
     public JComboBox<String> getChooseCompetition() {
         return chooseCompetition;
     }
+
+    public void setChooseCompetition(JComboBox<String> chooseCompetition) {
+        this.chooseCompetition = chooseCompetition;
+    }
+
     public JTextField getMaxCompetitorsNumber() {
         return maxCompetitorsNumber;
+    }
+
+    public void setMaxCompetitorsNumber(JTextField maxCompetitorsNumber) {
+        this.maxCompetitorsNumber = maxCompetitorsNumber;
     }
 
     public JComboBox<String> getDiscipline() {
         return discipline;
     }
 
+    public void setDiscipline(JComboBox<String> discipline) {
+        this.discipline = discipline;
+    }
+
     public JComboBox<String> getLeague() {
         return league;
+    }
+
+    public void setLeague(JComboBox<String> league) {
+        this.league = league;
     }
 
     public JComboBox<String> getGender() {
@@ -194,33 +246,82 @@ public class SidePanel extends JPanel {
         this.gender = gender;
     }
 
+    public JButton getCreateCompetition() {
+        return createCompetition;
+    }
+
+    public void setCreateCompetition(JButton createCompetition) {
+        this.createCompetition = createCompetition;
+    }
+
+    public JPanel getAddCompetitorPanel() {
+        return addCompetitorPanel;
+    }
+
+    public void setAddCompetitorPanel(JPanel addCompetitorPanel) {
+        this.addCompetitorPanel = addCompetitorPanel;
+    }
+
     public JTextField getNameFromTxtBox() {
         return name;
+    }
+    public void setName(JTextField name) {
+        this.name = name;
     }
 
     public JTextField getAge() {
         return age;
     }
 
+    public void setAge(JTextField age) {
+        this.age = age;
+    }
+
     public JTextField getMaxSpeed() {
         return maxSpeed;
+    }
+
+    public void setMaxSpeed(JTextField maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     public JTextField getAcceleration() {
         return acceleration;
     }
 
+    public void setAcceleration(JTextField acceleration) {
+        this.acceleration = acceleration;
+    }
+
     public JButton getAddCompetitor() {
         return addCompetitor;
+    }
+
+    public void setAddCompetitor(JButton addCompetitor) {
+        this.addCompetitor = addCompetitor;
+    }
+
+    public JPanel getStartAndInfoPanel() {
+        return startAndInfoPanel;
+    }
+
+    public void setStartAndInfoPanel(JPanel startAndInfoPanel) {
+        this.startAndInfoPanel = startAndInfoPanel;
     }
 
     public JButton getStartCompetition() {
         return startCompetition;
     }
 
+    public void setStartCompetition(JButton startCompetition) {
+        this.startCompetition = startCompetition;
+    }
 
     public JButton getShowInfo() {
         return showInfo;
     }
 
+    public void setShowInfo(JButton showInfo) {
+        this.showInfo = showInfo;
+    }
 }
