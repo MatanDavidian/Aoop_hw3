@@ -27,6 +27,7 @@ public class ArenaPanel extends JPanel implements Runnable {
      * @param arenaName the name of the arena by string to change the background image.
      */
     public ArenaPanel(String arenaName) {
+        setSize(height,width);
         competitors = new Vector<>();
         setImage(arenaName , 700);
     }
