@@ -21,6 +21,7 @@ public class ArenaPanel extends JPanel implements Runnable {
     private int width=1000;
     private int height;
     private Competition competition;
+    static boolean alive=false;
     /**
      *Ctor
      * create Vector of object of DrawableObjcet class to paint the competitors on the screen.
@@ -37,6 +38,7 @@ public class ArenaPanel extends JPanel implements Runnable {
      */
     @Override
     public void run() {
+        alive=true;
         while(competition.getActiveCompetitors().size()>0) {
             this.repaint();
             this.revalidate();
@@ -46,6 +48,7 @@ public class ArenaPanel extends JPanel implements Runnable {
 
             }
         }
+        alive=false;
     }
 
     /**

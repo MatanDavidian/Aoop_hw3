@@ -5,7 +5,6 @@ import game.competition.*;
 import game.entities.sportsman.Sportsman;
 import game.entities.sportsman.WinterSportsman;
 import game.enums.*;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +18,7 @@ public class MainScreen extends JFrame{
     private WinterArena arena;
     private String compType;
     private String gender;
-    private int widthSize=1175;
+    private int widthSize=1180;
     private int heightSize=700;
     private static String stage="build arena";
     private static String cType;
@@ -37,9 +36,14 @@ public class MainScreen extends JFrame{
         this.setTitle("Competition");
         JPanel arenaPanel = new ArenaPanel("None");
         JPanel sidePanel = new SidePanel();
-        this.add(arenaPanel, BorderLayout.CENTER);
-        this.add(sidePanel, BorderLayout.EAST);
+        JPanel right = new JPanel(new BorderLayout(2,0));
+        right.add(new JSeparator(JSeparator.VERTICAL),
+                BorderLayout.LINE_START);
+        right.add(sidePanel,
+                BorderLayout.EAST);
 
+        this.add(arenaPanel, BorderLayout.CENTER);
+        this.add(right, BorderLayout.EAST);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         /**
@@ -57,45 +61,48 @@ public class MainScreen extends JFrame{
                 boolean RightArenaLen=true;
                 if(stage.equals("build arena") || stage.equals("create competition"))
                 {
-                    String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
-                    String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
-                    String arenaSnowSurface = ((SidePanel) sidePanel).getSnowSurface().getSelectedItem().toString().toUpperCase();
-                    String arenaWeatherCondition = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString().toUpperCase();
-                    int arenaLength = 0;
-                    /**
-                     * if arenaLengthString is not int , the value of arenaLength will be 700.
-                     */
-                    try {
-                        arenaLength = Integer.parseInt(arenaLengthString);
-                        if(arenaLength<700 || arenaLength>900) {
+                    if(ArenaPanel.alive==false) {
+                        String arenaName = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString() + ".jpg";
+                        String arenaLengthString = ((SidePanel) sidePanel).getArenaLenght().getText().toString();
+                        String arenaSnowSurface = ((SidePanel) sidePanel).getSnowSurface().getSelectedItem().toString().toUpperCase();
+                        String arenaWeatherCondition = ((SidePanel) sidePanel).getWeatherCondition().getSelectedItem().toString().toUpperCase();
+                        int arenaLength = 0;
+                        /**
+                         * if arenaLengthString is not int , the value of arenaLength will be 700.
+                         */
+                        try {
+                            arenaLength = Integer.parseInt(arenaLengthString);
+                            if (arenaLength < 700 || arenaLength > 900) {
+                                JOptionPane.showMessageDialog(null, "You must input int between 700-900");
+                                RightArenaLen = false;
+                            }
+                        } catch (NumberFormatException ex) {
                             JOptionPane.showMessageDialog(null, "You must input int between 700-900");
-                            RightArenaLen=false;
+                            RightArenaLen = false;
+                        }
+                        //set image according to name and length.
+                        if (RightArenaLen == true) {
+                            ((ArenaPanel) arenaPanel).setImage(arenaName, arenaLength);
+                            if (competition == null || competition.getActiveCompetitors().size() == 0) {
+                                // adding the arena details to competition
+                                arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
+                                heightSize = arenaLength + 80;
+                                setSize(1180, heightSize);
+
+                                //print details of the arena.
+                                //System.out.println(arena);
+
+                                //painting the canvas.
+                                ((ArenaPanel) arenaPanel).setCompetition(null);
+                                ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
+                                revalidate();
+                                repaint();
+                                stage = "create competition";
+                            }
                         }
                     }
-                    catch (NumberFormatException ex){
-                        JOptionPane.showMessageDialog(null, "You must input int between 700-900");
-                        RightArenaLen=false;
-                    }
-                    //set image according to name and length.
-                    if(RightArenaLen==true) {
-                        ((ArenaPanel) arenaPanel).setImage(arenaName, arenaLength);
-                        if (competition == null || competition.getActiveCompetitors().size() == 0) {
-                            // adding the arena details to competition
-                            arena = new WinterArena(arenaLength, SnowSurface.valueOf(arenaSnowSurface), WeatherCondition.valueOf(arenaWeatherCondition));
-                            heightSize = arenaLength + 80;
-                            setSize(1175, heightSize);
-
-                            //print details of the arena.
-                            //System.out.println(arena);
-
-                            //painting the canvas.
-                            ((ArenaPanel) arenaPanel).setCompetition(null);
-                            ((ArenaPanel) arenaPanel).getCompetitors().removeAllElements();
-                            revalidate();
-                            repaint();
-                            stage = "create competition";
-                        }
-                    }
+                    else
+                        JOptionPane.showMessageDialog(null, "The  competition is not finished, please try again later.");
                 }
                 else {
                     JOptionPane.showMessageDialog(null, "Right now you need to "+stage);

@@ -64,8 +64,8 @@ public abstract class Competition extends Thread implements Observer{
      ** This method will run the threads of all players.
      */
     public void startCompetition() {
-        ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
-        for (Competitor competitor : tmp) {
+        //ArrayList<Competitor> tmp = new ArrayList<>(activeCompetitors);
+        for (Competitor competitor : activeCompetitors) {
             ((MobileEntity) competitor).addObserver(this);
             if (!arena.isFinished(competitor)) {
                 ((MobileEntity)competitor).setMyArena(arena);
@@ -79,7 +79,7 @@ public abstract class Competition extends Thread implements Observer{
      * remove the competitior from activeCompetitors(Realization with lower running time than vector.remove(Object) ).
      */
     @Override
-    public void update(Observable o, Object arg) {
+    public synchronized void update(Observable o, Object arg) {
         finishedCompetitors.add((Competitor) o);
         int index=activeCompetitors.indexOf(o);
         activeCompetitors.set(index,activeCompetitors.lastElement());
